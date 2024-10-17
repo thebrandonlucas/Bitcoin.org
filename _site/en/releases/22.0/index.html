@@ -1,0 +1,2009 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+
+<head>
+
+
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta property="og:image" content="https://bitcoin.org/img/icons/opengraph.png?1729166419" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Bitcoin Core 22.0</title>
+
+<link rel="stylesheet" href="/css/font-awesome-4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/main.css?1729166419">
+<!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css"><script type="text/javascript" src="/js/ie.js"></script><![endif]-->
+<!--[if IE 8]><link rel="stylesheet" href="/css/ie8.css"><![endif]-->
+
+
+<script type="text/javascript" src="/js/base.js?1729166419"></script>
+<script type="text/javascript" src="/js/main.js?1729166419"></script>
+<script src="/js/jquery/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery/jquery-ui.min.js"></script>
+<script src="/js/jquery/jquery.qrcode.min.js"></script>
+
+<link rel="shortcut icon" href="/favicon.png?1729166419">
+<link rel="apple-touch-icon-precomposed" href="/img/icons/logo_ios.png?1729166419"/>
+<script>
+    window.cookieconsent_options = {
+        theme: 'light-floating'
+    }
+</script>
+<script type="text/javascript" src="/js/cookieconsent/cookieconsent.js?1729166419"></script>
+<script>
+if( navigator.doNotTrack != "yes" && navigator.doNotTrack != "1" && window.doNotTrack != "1" && navigator.msDoNotTrack != "1" ){
+	var script = document.createElement('script');
+	script.src = '/js/analytics.js'
+	document.getElementsByTagName("head")[0].appendChild(script);
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="donation-container">
+  <div class="donation-text">
+    <div class="donation-text-container">
+      <button onclick="closeDonationBanner()" class="donation-modal-close">
+        <img src="/img/icons/ico_close.svg?1729166419" alt="Close">
+      </button>
+      <p>
+        Bitcoin.org is a community funded project, donations are appreciated and used to improve the website.
+      </p>
+      <button type="button" class="donation-btn" onclick="openDonationModal()">
+        Make a donation
+      </button>
+    </div>
+  </div>
+  <button type="button" class="donation-visibility-toggle" onclick="toggleDonationBanner()">
+    Bitcoin.org needs your support!
+  </button>
+</div>
+
+
+
+<div id="donation-modal" style="display: none" class="donation-modal hidden">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-close-btn" onclick="closeDonationModal()">×</div>
+      <p class="modal-header-text section-title">Donate to Bitcoin.org</p>
+    </div>
+    <p class="modal-subheader">Use this QR code or address below</p>
+    <div style="text-align: center;">
+      <div id="donation-qr-code" data-address="bc1qx3u4njquj0ux63030r4nat8awqrlm0x2zlt96h"></div>
+    </div>
+    <div>
+      <a
+        class="donation-btc-address"
+        href="bitcoin:bc1qx3u4njquj0ux63030r4nat8awqrlm0x2zlt96h"
+        target="_blank">
+        bc1qx3u4njquj0ux63030r4nat8awqrlm0x2zlt96h
+      </a>
+    </div>
+    <div class="modal-body bg-white" style="overflow-y:hidden;text-align: center;">
+      <div>
+        
+        <button type="button" class="donation-amount-btn" data-amount-usd="5">
+          $5.00
+          <div class="donation-amount-usd-in-btc">(... BTC)</div>
+        </button>
+        
+        <button type="button" class="donation-amount-btn" data-amount-usd="25">
+          $25.00
+          <div class="donation-amount-usd-in-btc">(... BTC)</div>
+        </button>
+        
+        <button type="button" class="donation-amount-btn" data-amount-usd="50">
+          $50.00
+          <div class="donation-amount-usd-in-btc">(... BTC)</div>
+        </button>
+        
+      </div>
+
+      <div>
+        <input
+          style="margin-right: 15px"
+          type="text"
+          placeholder="Or custom amount? (BTC)"
+          id="donation-input-amount-btc" class="donation-amount-input">
+        <input
+          type="text"
+          placeholder="Or custom amount? (USD)"
+          id="donation-input-amount-usd" class="donation-amount-input">
+      </div>
+
+      <div>
+        <textarea
+          class="donation-amount-input"
+          id="donation-input-message"
+          placeholder="Optional description (for your wallet)"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="detectmobile" class="detectmobile"></div>
+
+
+
+
+
+
+
+
+
+
+<div class="head"><div>
+  
+
+<a id="menumobile" class="menumobile" onclick="mobileMenuShow(event);" ontouchstart="mobileMenuShow(event);"></a>
+
+  
+    
+
+<a class="logo" href="/en/bitcoin-core/"><img src="/img/bitcoin-core/bitcoin-core.svg?1729166419" alt="Bitcoin"></a>
+
+    
+
+<ul id="menusimple" class="menusimple menucore" onclick="mobileMenuHover(event);" ontouchstart="mobileMenuHover(event);">
+  <li><a class="is-expand">Features</a>
+    <ul>
+      <li><a href="/en/bitcoin-core/features/">Overview</a></li>
+      <li><a href="/en/bitcoin-core/features/validation">Validation</a></li>
+      <li><a href="/en/bitcoin-core/features/privacy">Privacy</a></li>
+      <li><a href="/en/bitcoin-core/features/requirements">Requirements</a></li>
+      <li><a href="/en/bitcoin-core/features/user-interface">User Interface</a></li>
+      <li><a href="/en/bitcoin-core/features/network-support">Network Support</a></li>
+    </ul>
+  </li>
+  <li><a href="/en/bitcoin-core/help">Get Help</a></li>
+  <li><a class="is-expand">Contribute</a>
+    <ul>
+      <li><a href="/en/bitcoin-core/contribute/issues">Bug reports</a></li>
+      <li><a href="/en/development">Code</a></li>
+      <li><a href="/en/bitcoin-core/contribute/documentation">Documentation</a></li>
+      <li><a href="/en/bitcoin-core/contribute/translations">Translations</a></li>
+      <li><a href="/en/bitcoin-core/contribute/support">Tech Support</a></li>
+    </ul>
+  </li>
+  <li><a href="/en/version-history">News</a></li>
+  <li><a href="/en/download">Download</a></li>
+</ul>
+
+  
+    
+<ul class="lang is-expand">
+  <li><a>English</a>
+  <ul>
+    <li><ul>
+      
+      
+        
+          <li><a href="/id/">Bahasa Indonesia</a></li>
+        
+        
+          <li><a href="/ca/">Català</a></li>
+        
+        
+          <li><a href="/da/">Dansk</a></li>
+        
+        
+          <li><a href="/de/">Deutsch</a></li>
+        
+        
+          <li><a href="/en/" class="active">English</a></li>
+        
+        
+          <li><a href="/es/">Español</a></li>
+        
+        
+          <li><a href="/fr/">Français</a></li>
+        
+        
+          <li><a href="/it/">Italiano</a></li>
+        
+        
+          <li><a href="/hu/">Magyar</a></li>
+        
+        
+          <li><a href="/nl/">Nederlands</a></li>
+        
+        
+          <li><a href="/pl/">Polski</a></li>
+        
+        
+          <li><a href="/pt_BR/">Português Brasil</a></li>
+        
+        
+          <li><a href="/ro/">Română</a></li>
+        
+        
+          <li><a href="/sl/">Slovenščina</a></li>
+        
+        
+          <li><a href="/sr/">Srpski</a></li>
+        
+        
+          <li><a href="/sv/">Svenska</a></li>
+        
+        </ul></li><li><ul>
+          <li><a href="/tr/">Türkçe</a></li>
+        
+        
+          <li><a href="/el/">Ελληνικά</a></li>
+        
+        
+          <li><a href="/bg/">български</a></li>
+        
+        
+          <li><a href="/ru/">Русский</a></li>
+        
+        
+          <li><a href="/uk/">Українська</a></li>
+        
+        
+          <li><a href="/hy/">Հայերեն</a></li>
+        
+        
+          <li><a href="/ar/">العربية</a></li>
+        
+        
+          <li><a href="/fa/">فارسی</a></li>
+        
+        
+          <li><a href="/he/">עברית</a></li>
+        
+        
+          <li><a href="/hi/">हिन्दी</a></li>
+        
+        
+          <li><a href="/ko/">한국어</a></li>
+        
+        
+          <li><a href="/km/">ខ្មែរ</a></li>
+        
+        
+          <li><a href="/ja/">日本語</a></li>
+        
+        
+          <li><a href="/zh_CN/">简体中文</a></li>
+        
+        
+          <li><a href="/zh_TW/">繁體中文</a></li>
+        
+      </ul></li>
+    </ul>
+  </li>
+</ul>
+
+    
+<div id="langselect" class="langselect">
+    <label for="select-input" class="center-select">
+        <select id="select-input" class="center-select__input" onchange="window.location=this.value;">
+            
+            <option value="/id/" >Bahasa Indonesia</option>
+            
+            <option value="/ca/" >Català</option>
+            
+            <option value="/da/" >Dansk</option>
+            
+            <option value="/de/" >Deutsch</option>
+            
+            <option value="/en/"  selected="selected">English</option>
+            
+            <option value="/es/" >Español</option>
+            
+            <option value="/fr/" >Français</option>
+            
+            <option value="/it/" >Italiano</option>
+            
+            <option value="/hu/" >Magyar</option>
+            
+            <option value="/nl/" >Nederlands</option>
+            
+            <option value="/pl/" >Polski</option>
+            
+            <option value="/pt_BR/" >Português Brasil</option>
+            
+            <option value="/ro/" >Română</option>
+            
+            <option value="/sl/" >Slovenščina</option>
+            
+            <option value="/sr/" >Srpski</option>
+            
+            <option value="/sv/" >Svenska</option>
+            
+            <option value="/tr/" >Türkçe</option>
+            
+            <option value="/el/" >Ελληνικά</option>
+            
+            <option value="/bg/" >български</option>
+            
+            <option value="/ru/" >Русский</option>
+            
+            <option value="/uk/" >Українська</option>
+            
+            <option value="/hy/" >Հայերեն</option>
+            
+            <option value="/ar/" >العربية</option>
+            
+            <option value="/fa/" >فارسی</option>
+            
+            <option value="/he/" >עברית</option>
+            
+            <option value="/hi/" >हिन्दी</option>
+            
+            <option value="/ko/" >한국어</option>
+            
+            <option value="/km/" >ខ្មែរ</option>
+            
+            <option value="/ja/" >日本語</option>
+            
+            <option value="/zh_CN/" >简体中文</option>
+            
+            <option value="/zh_TW/" >繁體中文</option>
+            
+        </select>
+        <span class="center-select__text">Language: <span class="is-capital">en</span></span>
+    </label>
+</div>
+
+</div></div>
+
+<div class="body">
+  
+    
+
+<div class="breadcrumbs">
+  <div class="container">
+      
+    <a href="/en/">Bitcoin</a>
+     &gt;    
+    <a href="/en/bitcoin-core/">Core</a>
+     &gt;    
+    <a href="/en/version-history">News</a>
+     &gt;      22.0   
+  </div>
+</div>
+
+  
+  
+
+<div id="content" class="content">
+    <link rel="alternate" type="application/rss+xml" href="/en/rss/releases.rss" title="Bitcoin Core releases">
+<div class="versiontext hero">
+  <div class="container hero-container">
+    <h1>Bitcoin Core 22.0</h1>
+    
+  </div>
+</div>
+
+<div class="toc-container release-content">
+  <div class="row toc-row">
+    
+
+    <div class="toccontent version-content">
+      <article class="article">
+        <div class="post-content">
+
+  <h1 id="release-notes">22.0 Release Notes</h1>
+
+  <p>Bitcoin Core version 22.0 is now available from:</p>
+
+  <p><a href="https://bitcoincore.org/bin/bitcoin-core-22.0/">https://bitcoincore.org/bin/bitcoin-core-22.0/</a></p>
+
+  <p>This release includes new features, various bug fixes and performance
+improvements, as well as updated translations.</p>
+
+  <p>Please report bugs using the issue tracker at GitHub:</p>
+
+  <p><a href="https://github.com/bitcoin/bitcoin/issues">https://github.com/bitcoin/bitcoin/issues</a></p>
+
+  <p>To receive security and update notifications, please subscribe to:</p>
+
+  <p><a href="https://bitcoincore.org/en/list/announcements/join/">https://bitcoincore.org/en/list/announcements/join/</a></p>
+
+  <h1 id="how-to-upgrade">How to Upgrade</h1>
+
+  <p>If you are running an older version, shut it down. Wait until it has completely
+shut down (which might take a few minutes in some cases), then run the
+installer (on Windows) or just copy over <code class="language-text highlighter-rouge">/Applications/Bitcoin-Qt</code> (on Mac)
+or <code class="language-text highlighter-rouge">bitcoind</code>/<code class="language-text highlighter-rouge">bitcoin-qt</code> (on Linux).</p>
+
+  <p>Upgrading directly from a version of Bitcoin Core that has reached its EOL is
+possible, but it might take some time if the data directory needs to be migrated. Old
+wallet versions of Bitcoin Core are generally supported.</p>
+
+  <h1 id="compatibility">Compatibility</h1>
+
+  <p>Bitcoin Core is supported and extensively tested on operating systems
+using the Linux kernel, macOS 10.14+, and Windows 7 and newer.  Bitcoin
+Core should also work on most other Unix-like systems but is not as
+frequently tested on them.  It is not recommended to use Bitcoin Core on
+unsupported systems.</p>
+
+  <p>From Bitcoin Core 22.0 onwards, macOS versions earlier than 10.14 are no longer supported.</p>
+
+  <h1 id="notable-changes">Notable changes</h1>
+
+  <h2 id="p2p-and-network-changes">P2P and network changes</h2>
+  <ul>
+    <li>Added support for running Bitcoin Core as an
+<a href="https://en.wikipedia.org/wiki/I2P">I2P (Invisible Internet Project)</a> service
+and connect to such services. See <a href="https://github.com/bitcoin/bitcoin/blob/22.x/doc/i2p.md">i2p.md</a> for details. (#20685)</li>
+    <li>
+      <p>This release removes support for Tor version 2 hidden services in favor of Tor
+v3 only, as the Tor network <a href="https://blog.torproject.org/v2-deprecation-timeline">dropped support for Tor
+v2</a> with the release of
+Tor version 0.4.6.  Henceforth, Bitcoin Core ignores Tor v2 addresses; it
+neither rumors them over the network to other peers, nor stores them in memory
+or to <code class="language-text highlighter-rouge">peers.dat</code>.  (#22050)</p>
+    </li>
+    <li>Added NAT-PMP port mapping support via
+<a href="https://miniupnp.tuxfamily.org/libnatpmp.html"><code class="language-text highlighter-rouge">libnatpmp</code></a>. (#18077)</li>
+  </ul>
+
+  <h2 id="new-and-updated-rpcs">New and Updated RPCs</h2>
+
+  <ul>
+    <li>
+      <p>Due to <a href="https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki">BIP 350</a>
+being implemented, behavior for all RPCs that accept addresses is changed when
+a native witness version 1 (or higher) is passed. These now require a Bech32m
+encoding instead of a Bech32 one, and Bech32m encoding will be used for such
+addresses in RPC output as well. No version 1 addresses should be created
+for mainnet until consensus rules are adopted that give them meaning
+(as will happen through <a href="https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki">BIP 341</a>).
+Once that happens, Bech32m is expected to be used for them, so this shouldn’t
+affect any production systems, but may be observed on other networks where such
+addresses already have meaning (like signet). (#20861)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">getpeerinfo</code> RPC returns two new boolean fields, <code class="language-text highlighter-rouge">bip152_hb_to</code> and
+<code class="language-text highlighter-rouge">bip152_hb_from</code>, that respectively indicate whether we selected a peer to be
+in compact blocks high-bandwidth mode or whether a peer selected us as a
+compact blocks high-bandwidth peer. High-bandwidth peers send new block
+announcements via a <code class="language-text highlighter-rouge">cmpctblock</code> message rather than the usual inv/headers
+announcements. See BIP 152 for more details. (#19776)</p>
+    </li>
+    <li>
+      <p><code class="language-text highlighter-rouge">getpeerinfo</code> no longer returns the following fields: <code class="language-text highlighter-rouge">addnode</code>, <code class="language-text highlighter-rouge">banscore</code>,
+and <code class="language-text highlighter-rouge">whitelisted</code>, which were previously deprecated in 0.21. Instead of
+<code class="language-text highlighter-rouge">addnode</code>, the <code class="language-text highlighter-rouge">connection_type</code> field returns manual. Instead of
+<code class="language-text highlighter-rouge">whitelisted</code>, the <code class="language-text highlighter-rouge">permissions</code> field indicates if the peer has special
+privileges. The <code class="language-text highlighter-rouge">banscore</code> field has simply been removed. (#20755)</p>
+    </li>
+    <li>
+      <p>The following RPCs:  <code class="language-text highlighter-rouge">gettxout</code>, <code class="language-text highlighter-rouge">getrawtransaction</code>, <code class="language-text highlighter-rouge">decoderawtransaction</code>,
+<code class="language-text highlighter-rouge">decodescript</code>, <code class="language-text highlighter-rouge">gettransaction</code>, and REST endpoints: <code class="language-text highlighter-rouge">/rest/tx</code>,
+<code class="language-text highlighter-rouge">/rest/getutxos</code>, <code class="language-text highlighter-rouge">/rest/block</code> deprecated the following fields (which are no
+longer returned in the responses by default): <code class="language-text highlighter-rouge">addresses</code>, <code class="language-text highlighter-rouge">reqSigs</code>.
+The <code class="language-text highlighter-rouge">-deprecatedrpc=addresses</code> flag must be passed for these fields to be
+included in the RPC response. This flag/option will be available only for this major release, after which
+the deprecation will be removed entirely. Note that these fields are attributes of
+the <code class="language-text highlighter-rouge">scriptPubKey</code> object returned in the RPC response. However, in the response
+of <code class="language-text highlighter-rouge">decodescript</code> these fields are top-level attributes, and included again as attributes
+of the <code class="language-text highlighter-rouge">scriptPubKey</code> object. (#20286)</p>
+    </li>
+    <li>
+      <p>When creating a hex-encoded bitcoin transaction using the <code class="language-text highlighter-rouge">bitcoin-tx</code> utility
+with the <code class="language-text highlighter-rouge">-json</code> option set, the following fields: <code class="language-text highlighter-rouge">addresses</code>, <code class="language-text highlighter-rouge">reqSigs</code> are no longer
+returned in the tx output of the response. (#20286)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">listbanned</code> RPC now returns two new numeric fields: <code class="language-text highlighter-rouge">ban_duration</code> and <code class="language-text highlighter-rouge">time_remaining</code>.
+Respectively, these new fields indicate the duration of a ban and the time remaining until a ban expires,
+both in seconds. Additionally, the <code class="language-text highlighter-rouge">ban_created</code> field is repositioned to come before <code class="language-text highlighter-rouge">banned_until</code>. (#21602)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">setban</code> RPC can ban onion addresses again. This fixes a regression introduced in version 0.21.0. (#20852)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">getnodeaddresses</code> RPC now returns a “network” field indicating the
+network type (ipv4, ipv6, onion, or i2p) for each address.  (#21594)</p>
+    </li>
+    <li>
+      <p><code class="language-text highlighter-rouge">getnodeaddresses</code> now also accepts a “network” argument (ipv4, ipv6, onion,
+or i2p) to return only addresses of the specified network.  (#21843)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">testmempoolaccept</code> RPC now accepts multiple transactions (still experimental at the moment,
+API may be unstable). This is intended for testing transaction packages with dependency
+relationships; it is not recommended for batch-validating independent transactions. In addition to
+mempool policy, package policies apply: the list cannot contain more than 25 transactions or have a
+total size exceeding 101K virtual bytes, and cannot conflict with (spend the same inputs as) each other or
+the mempool, even if it would be a valid BIP125 replace-by-fee. There are some known limitations to
+the accuracy of the test accept: it’s possible for <code class="language-text highlighter-rouge">testmempoolaccept</code> to return “allowed”=True for a
+group of transactions, but “too-long-mempool-chain” if they are actually submitted. (#20833)</p>
+    </li>
+    <li>
+      <p><code class="language-text highlighter-rouge">addmultisigaddress</code> and <code class="language-text highlighter-rouge">createmultisig</code> now support up to 20 keys for
+Segwit addresses. (#20867)</p>
+    </li>
+  </ul>
+
+  <p>Changes to Wallet or GUI related RPCs can be found in the GUI or Wallet section below.</p>
+
+  <h2 id="build-system">Build System</h2>
+
+  <ul>
+    <li>Release binaries are now produced using the new <code class="language-text highlighter-rouge">guix</code>-based build system.
+The <a href="https://github.com/bitcoin/bitcoin/blob/master/doc/release-process.md">/doc/release-process.md</a> document has been updated accordingly.</li>
+  </ul>
+
+  <h2 id="files">Files</h2>
+
+  <ul>
+    <li>The list of banned hosts and networks (via <code class="language-text highlighter-rouge">setban</code> RPC) is now saved on disk
+in JSON format in <code class="language-text highlighter-rouge">banlist.json</code> instead of <code class="language-text highlighter-rouge">banlist.dat</code>. <code class="language-text highlighter-rouge">banlist.dat</code> is
+only read on startup if <code class="language-text highlighter-rouge">banlist.json</code> is not present. Changes are only written to the new
+<code class="language-text highlighter-rouge">banlist.json</code>. A future version of Bitcoin Core may completely ignore
+<code class="language-text highlighter-rouge">banlist.dat</code>. (#20966)</li>
+  </ul>
+
+  <h2 id="new-settings">New settings</h2>
+
+  <ul>
+    <li>The <code class="language-text highlighter-rouge">-natpmp</code> option has been added to use NAT-PMP to map the listening port.
+If both UPnP and NAT-PMP are enabled, a successful allocation from UPnP
+prevails over one from NAT-PMP. (#18077)</li>
+  </ul>
+
+  <h2 id="updated-settings">Updated settings</h2>
+
+  <p>Changes to Wallet or GUI related settings can be found in the GUI or Wallet section below.</p>
+
+  <ul>
+    <li>Passing an invalid <code class="language-text highlighter-rouge">-rpcauth</code> argument now cause bitcoind to fail to start.  (#20461)</li>
+  </ul>
+
+  <h2 id="tools-and-utilities">Tools and Utilities</h2>
+
+  <ul>
+    <li>
+      <p>A new CLI <code class="language-text highlighter-rouge">-addrinfo</code> command returns the number of addresses known to the
+node per network type (including Tor v2 versus v3) and total. This can be
+useful to see if the node knows enough addresses in a network to use options
+like <code class="language-text highlighter-rouge">-onlynet=&lt;network&gt;</code> or to upgrade to this release of Bitcoin Core 22.0
+that supports Tor v3 only.  (#21595)</p>
+    </li>
+    <li>
+      <p>A new <code class="language-text highlighter-rouge">-rpcwaittimeout</code> argument to <code class="language-text highlighter-rouge">bitcoin-cli</code> sets the timeout
+in seconds to use with <code class="language-text highlighter-rouge">-rpcwait</code>. If the timeout expires,
+<code class="language-text highlighter-rouge">bitcoin-cli</code> will report a failure. (#21056)</p>
+    </li>
+  </ul>
+
+  <h2 id="wallet">Wallet</h2>
+
+  <ul>
+    <li>
+      <p>External signers such as hardware wallets can now be used through the new RPC methods <code class="language-text highlighter-rouge">enumeratesigners</code> and <code class="language-text highlighter-rouge">displayaddress</code>. Support is also added to the <code class="language-text highlighter-rouge">send</code> RPC call. This feature is experimental. See <a href="https://github.com/bitcoin/bitcoin/blob/22.x/doc/external-signer.md">external-signer.md</a> for details. (#16546)</p>
+    </li>
+    <li>
+      <p>A new <code class="language-text highlighter-rouge">listdescriptors</code> RPC is available to inspect the contents of descriptor-enabled wallets.
+The RPC returns public versions of all imported descriptors, including their timestamp and flags.
+For ranged descriptors, it also returns the range boundaries and the next index to generate addresses from. (#20226)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">bumpfee</code> RPC is not available with wallets that have private keys
+disabled. <code class="language-text highlighter-rouge">psbtbumpfee</code> can be used instead. (#20891)</p>
+    </li>
+    <li>
+      <p>The <code class="language-text highlighter-rouge">fundrawtransaction</code>, <code class="language-text highlighter-rouge">send</code> and <code class="language-text highlighter-rouge">walletcreatefundedpsbt</code> RPCs now support an <code class="language-text highlighter-rouge">include_unsafe</code> option
+that when <code class="language-text highlighter-rouge">true</code> allows using unsafe inputs to fund the transaction.
+Note that the resulting transaction may become invalid if one of the unsafe inputs disappears.
+If that happens, the transaction must be funded with different inputs and republished. (#21359)</p>
+    </li>
+    <li>
+      <p>We now support up to 20 keys in <code class="language-text highlighter-rouge">multi()</code> and <code class="language-text highlighter-rouge">sortedmulti()</code> descriptors
+under <code class="language-text highlighter-rouge">wsh()</code>. (#20867)</p>
+    </li>
+    <li>
+      <p>Taproot descriptors can be imported into the wallet only after activation has occurred on the network (e.g. mainnet, testnet, signet) in use. See <a href="https://github.com/bitcoin/bitcoin/blob/22.x/doc/descriptors.md">descriptors.md</a> for supported descriptors.</p>
+    </li>
+  </ul>
+
+  <h2 id="gui-changes">GUI changes</h2>
+
+  <ul>
+    <li>External signers such as hardware wallets can now be used. These require an external tool such as <a href="https://github.com/bitcoin-core/HWI">HWI</a> to be installed and configured under Options -&gt; Wallet. When creating a new wallet a new option “External signer” will appear in the dialog. If the device is detected, its name is suggested as the wallet name. The watch-only keys are then automatically imported. Receive addresses can be verified on the device. The send dialog will automatically use the connected device. This feature is experimental and the UI may freeze for a few seconds when performing these actions.</li>
+  </ul>
+
+  <h1 id="low-level-changes">Low-level changes</h1>
+
+  <h2 id="rpc">RPC</h2>
+
+  <ul>
+    <li>
+      <p>The RPC server can process a limited number of simultaneous RPC requests.
+Previously, if this limit was exceeded, the RPC server would respond with
+<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_server_errors">status code 500 (<code class="language-text highlighter-rouge">HTTP_INTERNAL_SERVER_ERROR</code>)</a>.
+Now it returns status code 503 (<code class="language-text highlighter-rouge">HTTP_SERVICE_UNAVAILABLE</code>). (#18335)</p>
+    </li>
+    <li>
+      <p>Error codes have been updated to be more accurate for the following error cases (#18466):</p>
+      <ul>
+        <li><code class="language-text highlighter-rouge">signmessage</code> now returns RPC_INVALID_ADDRESS_OR_KEY (-5) if the
+passed address is invalid. Previously returned RPC_TYPE_ERROR (-3).</li>
+        <li><code class="language-text highlighter-rouge">verifymessage</code> now returns RPC_INVALID_ADDRESS_OR_KEY (-5) if the
+passed address is invalid. Previously returned RPC_TYPE_ERROR (-3).</li>
+        <li><code class="language-text highlighter-rouge">verifymessage</code> now returns RPC_TYPE_ERROR (-3) if the passed signature
+is malformed. Previously returned RPC_INVALID_ADDRESS_OR_KEY (-5).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2 id="tests">Tests</h2>
+
+  <h1 id="change-log">22.0 change log</h1>
+
+  <p>A detailed list of changes in this version follows. To keep the list to a manageable length, small refactors and typo fixes are not included, and similar changes are sometimes condensed into one line.</p>
+
+  <h3 id="consensus">Consensus</h3>
+  <ul>
+    <li>#19438 Introduce deploymentstatus (ajtowns)</li>
+    <li>#20207 Follow-up extra comments on taproot code and tests (sipa)</li>
+    <li>#21330 Deal with missing data in signature hashes more consistently (sipa)</li>
+  </ul>
+
+  <h3 id="policy">Policy</h3>
+  <ul>
+    <li>#18766 Disable fee estimation in blocksonly mode (by removing the fee estimates global) (darosior)</li>
+    <li>#20497 Add <code class="language-text highlighter-rouge">MAX_STANDARD_SCRIPTSIG_SIZE</code> to policy (sanket1729)</li>
+    <li>#20611 Move <code class="language-text highlighter-rouge">TX_MAX_STANDARD_VERSION</code> to policy (MarcoFalke)</li>
+  </ul>
+
+  <h3 id="mining">Mining</h3>
+  <ul>
+    <li>#19937, bitcoin/bitcoin#20923 Signet mining utility (ajtowns)</li>
+  </ul>
+
+  <h3 id="block-and-transaction-handling">Block and transaction handling</h3>
+  <ul>
+    <li>#14501 Fix possible data race when committing block files (luke-jr)</li>
+    <li>#15946 Allow maintaining the blockfilterindex when using prune (jonasschnelli)</li>
+    <li>#18710 Add local thread pool to CCheckQueue (hebasto)</li>
+    <li>#19521 Coinstats Index (fjahr)</li>
+    <li>#19806 UTXO snapshot activation (jamesob)</li>
+    <li>#19905 Remove dead CheckForkWarningConditionsOnNewFork (MarcoFalke)</li>
+    <li>#19935 Move SaltedHashers to separate file and add some new ones (achow101)</li>
+    <li>#20054 Remove confusing and useless “unexpected version” warning (MarcoFalke)</li>
+    <li>#20519 Handle rename failure in <code class="language-text highlighter-rouge">DumpMempool(…)</code> by using the <code class="language-text highlighter-rouge">RenameOver(…)</code> return value (practicalswift)</li>
+    <li>#20749, bitcoin/bitcoin#20750, bitcoin/bitcoin#21055, bitcoin/bitcoin#21270, bitcoin/bitcoin#21525, bitcoin/bitcoin#21391, bitcoin/bitcoin#21767, bitcoin/bitcoin#21866 Prune <code class="language-text highlighter-rouge">g_chainman</code> usage (dongcarl)</li>
+    <li>#20833 rpc/validation: enable packages through testmempoolaccept (glozow)</li>
+    <li>#20834 Locks and docs in ATMP and CheckInputsFromMempoolAndCache (glozow)</li>
+    <li>#20854 Remove unnecessary try-block (amitiuttarwar)</li>
+    <li>#20868 Remove redundant check on pindex (jarolrod)</li>
+    <li>#20921 Don’t try to invalidate genesis block in CChainState::InvalidateBlock (theStack)</li>
+    <li>#20972 Locks: Annotate CTxMemPool::check to require <code class="language-text highlighter-rouge">cs_main</code> (dongcarl)</li>
+    <li>#21009 Remove RewindBlockIndex logic (dhruv)</li>
+    <li>#21025 Guard chainman chainstates with <code class="language-text highlighter-rouge">cs_main</code> (dongcarl)</li>
+    <li>#21202 Two small clang lock annotation improvements (amitiuttarwar)</li>
+    <li>#21523 Run VerifyDB on all chainstates (jamesob)</li>
+    <li>#21573 Update libsecp256k1 subtree to latest master (sipa)</li>
+    <li>#21582, bitcoin/bitcoin#21584, bitcoin/bitcoin#21585 Fix assumeutxo crashes (MarcoFalke)</li>
+    <li>#21681 Fix ActivateSnapshot to use hardcoded nChainTx (jamesob)</li>
+    <li>#21796 index: Avoid async shutdown on init error (MarcoFalke)</li>
+    <li>#21946 Document and test lack of inherited signaling in RBF policy (ariard)</li>
+    <li>#22084 Package testmempoolaccept followups (glozow)</li>
+    <li>#22102 Remove <code class="language-text highlighter-rouge">Warning:</code> from warning message printed for unknown new rules (prayank23)</li>
+    <li>#22112 Force port 0 in I2P (vasild)</li>
+    <li>#22135 CRegTestParams: Use <code class="language-text highlighter-rouge">args</code> instead of <code class="language-text highlighter-rouge">gArgs</code> (kiminuo)</li>
+    <li>#22146 Reject invalid coin height and output index when loading assumeutxo (MarcoFalke)</li>
+    <li>#22253 Distinguish between same tx and same-nonwitness-data tx in mempool (glozow)</li>
+    <li>#22261 Two small fixes to node broadcast logic (jnewbery)</li>
+    <li>#22415 Make <code class="language-text highlighter-rouge">m_mempool</code> optional in CChainState (jamesob)</li>
+    <li>#22499 Update assumed chain params (sriramdvt)</li>
+    <li>#22589 net, doc: update I2P hardcoded seeds and docs for 22.0 (jonatack)</li>
+  </ul>
+
+  <h3 id="p2p-protocol-and-network-code">P2P protocol and network code</h3>
+  <ul>
+    <li>#18077 Add NAT-PMP port forwarding support (hebasto)</li>
+    <li>#18722 addrman: improve performance by using more suitable containers (vasild)</li>
+    <li>#18819 Replace <code class="language-text highlighter-rouge">cs_feeFilter</code> with simple std::atomic (MarcoFalke)</li>
+    <li>#19203 Add regression fuzz harness for CVE-2017-18350. Add FuzzedSocket (practicalswift)</li>
+    <li>#19288 fuzz: Add fuzzing harness for TorController (practicalswift)</li>
+    <li>#19415 Make DNS lookup mockable, add fuzzing harness (practicalswift)</li>
+    <li>#19509 Per-Peer Message Capture (troygiorshev)</li>
+    <li>#19763 Don’t try to relay to the address’ originator (vasild)</li>
+    <li>#19771 Replace enum CConnMan::NumConnections with enum class ConnectionDirection (luke-jr)</li>
+    <li>#19776 net, rpc: expose high bandwidth mode state via getpeerinfo (theStack)</li>
+    <li>#19832 Put disconnecting logs into BCLog::NET category (hebasto)</li>
+    <li>#19858 Periodically make block-relay connections and sync headers (sdaftuar)</li>
+    <li>#19884 No delay in adding fixed seeds if -dnsseed=0 and peers.dat is empty (dhruv)</li>
+    <li>#20079 Treat handshake misbehavior like unknown message (MarcoFalke)</li>
+    <li>#20138 Assume that SetCommonVersion is called at most once per peer (MarcoFalke)</li>
+    <li>#20162 p2p: declare Announcement::m_state as uint8_t, add getter/setter (jonatack)</li>
+    <li>#20197 Protect onions in AttemptToEvictConnection(), add eviction protection test coverage (jonatack)</li>
+    <li>#20210 assert <code class="language-text highlighter-rouge">CNode::m_inbound_onion</code> is inbound in ctor, add getter, unit tests (jonatack)</li>
+    <li>#20228 addrman: Make addrman a top-level component (jnewbery)</li>
+    <li>#20234 Don’t bind on 0.0.0.0 if binds are restricted to Tor (vasild)</li>
+    <li>#20477 Add unit testing of node eviction logic (practicalswift)</li>
+    <li>#20516 Well-defined CAddress disk serialization, and addrv2 anchors.dat (sipa)</li>
+    <li>#20557 addrman: Fix new table bucketing during unserialization (jnewbery)</li>
+    <li>#20561 Periodically clear <code class="language-text highlighter-rouge">m_addr_known</code> (sdaftuar)</li>
+    <li>#20599 net processing: Tolerate sendheaders and sendcmpct messages before verack (jnewbery)</li>
+    <li>#20616 Check CJDNS address is valid (lontivero)</li>
+    <li>#20617 Remove <code class="language-text highlighter-rouge">m_is_manual_connection</code> from CNodeState (ariard)</li>
+    <li>#20624 net processing: Remove nStartingHeight check from block relay (jnewbery)</li>
+    <li>#20651 Make p2p recv buffer timeout 20 minutes for all peers (jnewbery)</li>
+    <li>#20661 Only select from addrv2-capable peers for torv3 address relay (sipa)</li>
+    <li>#20685 Add I2P support using I2P SAM (vasild)</li>
+    <li>#20690 Clean up logging of outbound connection type (sdaftuar)</li>
+    <li>#20721 Move ping data to <code class="language-text highlighter-rouge">net_processing</code> (jnewbery)</li>
+    <li>#20724 Cleanup of -debug=net log messages (ajtowns)</li>
+    <li>#20747 net processing: Remove dropmessagestest (jnewbery)</li>
+    <li>#20764 cli -netinfo peer connections dashboard updates 🎄 ✨ (jonatack)</li>
+    <li>#20788 add RAII socket and use it instead of bare SOCKET (vasild)</li>
+    <li>#20791 remove unused legacyWhitelisted in AcceptConnection() (jonatack)</li>
+    <li>#20816 Move RecordBytesSent() call out of <code class="language-text highlighter-rouge">cs_vSend</code> lock (jnewbery)</li>
+    <li>#20845 Log to net debug in MaybeDiscourageAndDisconnect except for noban and manual peers (MarcoFalke)</li>
+    <li>#20864 Move SocketSendData lock annotation to header (MarcoFalke)</li>
+    <li>#20965 net, rpc:  return <code class="language-text highlighter-rouge">NET_UNROUTABLE</code> as <code class="language-text highlighter-rouge">not_publicly_routable</code>, automate helps (jonatack)</li>
+    <li>#20966 banman: save the banlist in a JSON format on disk (vasild)</li>
+    <li>#21015 Make all of <code class="language-text highlighter-rouge">net_processing</code> (and some of net) use std::chrono types (dhruv)</li>
+    <li>#21029 bitcoin-cli: Correct docs (no “generatenewaddress” exists) (luke-jr)</li>
+    <li>#21148 Split orphan handling from <code class="language-text highlighter-rouge">net_processing</code> into txorphanage (ajtowns)</li>
+    <li>#21162 Net Processing: Move RelayTransaction() into PeerManager (jnewbery)</li>
+    <li>#21167 make <code class="language-text highlighter-rouge">CNode::m_inbound_onion</code> public, initialize explicitly (jonatack)</li>
+    <li>#21186 net/net processing: Move addr data into <code class="language-text highlighter-rouge">net_processing</code> (jnewbery)</li>
+    <li>#21187 Net processing: Only call PushAddress() from <code class="language-text highlighter-rouge">net_processing</code> (jnewbery)</li>
+    <li>#21198 Address outstanding review comments from PR20721 (jnewbery)</li>
+    <li>#21222 log: Clarify log message when file does not exist (MarcoFalke)</li>
+    <li>#21235 Clarify disconnect log message in ProcessGetBlockData, remove send bool (MarcoFalke)</li>
+    <li>#21236 Net processing: Extract <code class="language-text highlighter-rouge">addr</code> send functionality into MaybeSendAddr() (jnewbery)</li>
+    <li>#21261 update inbound eviction protection for multiple networks, add I2P peers (jonatack)</li>
+    <li>#21328 net, refactor: pass uint16 CService::port as uint16 (jonatack)</li>
+    <li>#21387 Refactor sock to add I2P fuzz and unit tests (vasild)</li>
+    <li>#21395 Net processing: Remove unused CNodeState.address member (jnewbery)</li>
+    <li>#21407 i2p: limit the size of incoming messages (vasild)</li>
+    <li>#21506 p2p, refactor: make NetPermissionFlags an enum class (jonatack)</li>
+    <li>#21509 Don’t send FEEFILTER in blocksonly mode (mzumsande)</li>
+    <li>#21560 Add Tor v3 hardcoded seeds (laanwj)</li>
+    <li>#21563 Restrict period when <code class="language-text highlighter-rouge">cs_vNodes</code> mutex is locked (hebasto)</li>
+    <li>#21564 Avoid calling getnameinfo when formatting IPv4 addresses in CNetAddr::ToStringIP (practicalswift)</li>
+    <li>#21631 i2p: always check the return value of Sock::Wait() (vasild)</li>
+    <li>#21644 p2p, bugfix: use NetPermissions::HasFlag() in CConnman::Bind() (jonatack)</li>
+    <li>#21659 flag relevant Sock methods with [[nodiscard]] (vasild)</li>
+    <li>#21750 remove unnecessary check of <code class="language-text highlighter-rouge">CNode::cs_vSend</code> (vasild)</li>
+    <li>#21756 Avoid calling <code class="language-text highlighter-rouge">getnameinfo</code> when formatting IPv6 addresses in <code class="language-text highlighter-rouge">CNetAddr::ToStringIP</code> (practicalswift)</li>
+    <li>#21775 Limit <code class="language-text highlighter-rouge">m_block_inv_mutex</code> (MarcoFalke)</li>
+    <li>#21825 Add I2P hardcoded seeds (jonatack)</li>
+    <li>#21843 p2p, rpc: enable GetAddr, GetAddresses, and getnodeaddresses by network (jonatack)</li>
+    <li>#21845 net processing: Don’t require locking <code class="language-text highlighter-rouge">cs_main</code> before calling RelayTransactions() (jnewbery)</li>
+    <li>#21872 Sanitize message type for logging (laanwj)</li>
+    <li>#21914 Use stronger AddLocal() for our I2P address (vasild)</li>
+    <li>#21985 Return IPv6 scope id in <code class="language-text highlighter-rouge">CNetAddr::ToStringIP()</code> (laanwj)</li>
+    <li>#21992 Remove -feefilter option (amadeuszpawlik)</li>
+    <li>#21996 Pass strings to NetPermissions::TryParse functions by const ref (jonatack)</li>
+    <li>#22013 ignore block-relay-only peers when skipping DNS seed (ajtowns)</li>
+    <li>#22050 Remove tor v2 support (jonatack)</li>
+    <li>#22096 AddrFetch - don’t disconnect on self-announcements (mzumsande)</li>
+    <li>#22141 net processing: Remove hash and fValidatedHeaders from QueuedBlock (jnewbery)</li>
+    <li>#22144 Randomize message processing peer order (sipa)</li>
+    <li>#22147 Protect last outbound HB compact block peer (sdaftuar)</li>
+    <li>#22179 Torv2 removal followups (vasild)</li>
+    <li>#22211 Relay I2P addresses even if not reachable (by us) (vasild)</li>
+    <li>#22284 Performance improvements to ProtectEvictionCandidatesByRatio() (jonatack)</li>
+    <li>#22387 Rate limit the processing of rumoured addresses (sipa)</li>
+    <li>#22455 addrman: detect on-disk corrupted nNew and nTried during unserialization (vasild)</li>
+  </ul>
+
+  <h3 id="wallet-1">Wallet</h3>
+  <ul>
+    <li>#15710 Catch <code class="language-text highlighter-rouge">ios_base::failure</code> specifically (Bushstar)</li>
+    <li>#16546 External signer support - Wallet Box edition (Sjors)</li>
+    <li>#17331 Use effective values throughout coin selection (achow101)</li>
+    <li>#18418 Increase <code class="language-text highlighter-rouge">OUTPUT_GROUP_MAX_ENTRIES</code> to 100 (fjahr)</li>
+    <li>#18842 Mark replaced tx to not be in the mempool anymore (MarcoFalke)</li>
+    <li>#19136 Add <code class="language-text highlighter-rouge">parent_desc</code> to <code class="language-text highlighter-rouge">getaddressinfo</code> (achow101)</li>
+    <li>#19137 wallettool: Add dump and createfromdump commands (achow101)</li>
+    <li>#19651 <code class="language-text highlighter-rouge">importdescriptor</code>s update existing (S3RK)</li>
+    <li>#20040 Refactor OutputGroups to handle fees and spending eligibility on grouping (achow101)</li>
+    <li>#20202 Make BDB support optional (achow101)</li>
+    <li>#20226, bitcoin/bitcoin#21277, - #21063 Add <code class="language-text highlighter-rouge">listdescriptors</code> command (S3RK)</li>
+    <li>#20267 Disable and fix tests for when BDB is not compiled (achow101)</li>
+    <li>#20275 List all wallets in non-SQLite and non-BDB builds (ryanofsky)</li>
+    <li>#20365 wallettool: Add parameter to create descriptors wallet (S3RK)</li>
+    <li>#20403 <code class="language-text highlighter-rouge">upgradewallet</code> fixes, improvements, test coverage (jonatack)</li>
+    <li>#20448 <code class="language-text highlighter-rouge">unloadwallet</code>: Allow specifying <code class="language-text highlighter-rouge">wallet_name</code> param matching RPC endpoint wallet (luke-jr)</li>
+    <li>#20536 Error with “Transaction too large” if the funded tx will end up being too large after signing (achow101)</li>
+    <li>#20687 Add missing check for -descriptors wallet tool option (MarcoFalke)</li>
+    <li>#20952 Add BerkeleyDB version sanity check at init time (laanwj)</li>
+    <li>#21127 Load flags before everything else (Sjors)</li>
+    <li>#21141 Add new format string placeholders for walletnotify (maayank)</li>
+    <li>#21238 A few descriptor improvements to prepare for Taproot support (sipa)</li>
+    <li>#21302 <code class="language-text highlighter-rouge">createwallet</code> examples for descriptor wallets (S3RK)</li>
+    <li>#21329 descriptor wallet: Cache last hardened xpub and use in normalized descriptors (achow101)</li>
+    <li>#21365 Basic Taproot signing support for descriptor wallets (sipa)</li>
+    <li>#21417 Misc external signer improvement and HWI 2 support (Sjors)</li>
+    <li>#21467 Move external signer out of wallet module (Sjors)</li>
+    <li>#21572 Fix wrong wallet RPC context set after #21366 (ryanofsky)</li>
+    <li>#21574 Drop JSONRPCRequest constructors after #21366 (ryanofsky)</li>
+    <li>#21666 Miscellaneous external signer changes (fanquake)</li>
+    <li>#21759 Document coin selection code (glozow)</li>
+    <li>#21786 Ensure sat/vB feerates are in range (mantissa of 3) (jonatack)</li>
+    <li>#21944 Fix issues when <code class="language-text highlighter-rouge">walletdir</code> is root directory (prayank23)</li>
+    <li>#22042 Replace size/weight estimate tuple with struct for named fields (instagibbs)</li>
+    <li>#22051 Basic Taproot derivation support for descriptors (sipa)</li>
+    <li>#22154 Add OutputType::BECH32M and related wallet support for fetching bech32m addresses (achow101)</li>
+    <li>#22156 Allow tr() import only when Taproot is active (achow101)</li>
+    <li>#22166 Add support for inferring tr() descriptors (sipa)</li>
+    <li>#22173 Do not load external signers wallets when unsupported (achow101)</li>
+    <li>#22308 Add missing BlockUntilSyncedToCurrentChain (MarcoFalke)</li>
+    <li>#22334 Do not spam about non-existent spk managers (S3RK)</li>
+    <li>#22379 Erase spkmans rather than setting to nullptr (achow101)</li>
+    <li>#22421 Make IsSegWitOutput return true for taproot outputs (sipa)</li>
+    <li>#22461 Change ScriptPubKeyMan::Upgrade default to True (achow101)</li>
+    <li>#22492 Reorder locks in dumpwallet to avoid lock order assertion (achow101)</li>
+    <li>#22686 Use GetSelectionAmount in ApproximateBestSubset (achow101)</li>
+  </ul>
+
+  <h3 id="rpc-and-other-apis">RPC and other APIs</h3>
+  <ul>
+    <li>#18335, bitcoin/bitcoin#21484 cli: Print useful error if bitcoind rpc work queue exceeded (LarryRuane)</li>
+    <li>#18466 Fix invalid parameter error codes for <code class="language-text highlighter-rouge">{sign,verify}message</code> RPCs (theStack)</li>
+    <li>#18772 Calculate fees in <code class="language-text highlighter-rouge">getblock</code> using BlockUndo data (robot-visions)</li>
+    <li>#19033 http: Release work queue after event base finish (promag)</li>
+    <li>#19055 Add MuHash3072 implementation (fjahr)</li>
+    <li>#19145 Add <code class="language-text highlighter-rouge">hash_type</code> MUHASH for gettxoutsetinfo (fjahr)</li>
+    <li>#19847 Avoid duplicate set lookup in <code class="language-text highlighter-rouge">gettxoutproof</code> (promag)</li>
+    <li>#20286 Deprecate <code class="language-text highlighter-rouge">addresses</code> and <code class="language-text highlighter-rouge">reqSigs</code> from RPC outputs (mjdietzx)</li>
+    <li>#20459 Fail to return undocumented return values (MarcoFalke)</li>
+    <li>#20461 Validate <code class="language-text highlighter-rouge">-rpcauth</code> arguments (promag)</li>
+    <li>#20556 Properly document return values (<code class="language-text highlighter-rouge">submitblock</code>, <code class="language-text highlighter-rouge">gettxout</code>, <code class="language-text highlighter-rouge">getblocktemplate</code>, <code class="language-text highlighter-rouge">scantxoutset</code>) (MarcoFalke)</li>
+    <li>#20755 Remove deprecated fields from <code class="language-text highlighter-rouge">getpeerinfo</code> (amitiuttarwar)</li>
+    <li>#20832 Better error messages for invalid addresses (eilx2)</li>
+    <li>#20867 Support up to 20 keys for multisig under Segwit context (darosior)</li>
+    <li>#20877 cli: <code class="language-text highlighter-rouge">-netinfo</code> user help and argument parsing improvements (jonatack)</li>
+    <li>#20891 Remove deprecated bumpfee behavior (achow101)</li>
+    <li>#20916 Return wtxid from <code class="language-text highlighter-rouge">testmempoolaccept</code> (MarcoFalke)</li>
+    <li>#20917 Add missing signet mentions in network name lists (theStack)</li>
+    <li>#20941 Document <code class="language-text highlighter-rouge">RPC_TRANSACTION_ALREADY_IN_CHAIN</code> exception (jarolrod)</li>
+    <li>#20944 Return total fee in <code class="language-text highlighter-rouge">getmempoolinfo</code> (MarcoFalke)</li>
+    <li>#20964 Add specific error code for “wallet already loaded” (laanwj)</li>
+    <li>#21053 Document {previous,next}blockhash as optional (theStack)</li>
+    <li>#21056 Add a <code class="language-text highlighter-rouge">-rpcwaittimeout</code> parameter to limit time spent waiting (cdecker)</li>
+    <li>#21192 cli: Treat high detail levels as maximum in <code class="language-text highlighter-rouge">-netinfo</code> (laanwj)</li>
+    <li>#21311 Document optional fields for <code class="language-text highlighter-rouge">getchaintxstats</code> result (theStack)</li>
+    <li>#21359 <code class="language-text highlighter-rouge">include_unsafe</code> option for fundrawtransaction (t-bast)</li>
+    <li>#21426 Remove <code class="language-text highlighter-rouge">scantxoutset</code> EXPERIMENTAL warning (jonatack)</li>
+    <li>#21544 Missing doc updates for bumpfee psbt update (MarcoFalke)</li>
+    <li>#21594 Add <code class="language-text highlighter-rouge">network</code> field to <code class="language-text highlighter-rouge">getnodeaddresses</code> (jonatack)</li>
+    <li>#21595, bitcoin/bitcoin#21753 cli: Create <code class="language-text highlighter-rouge">-addrinfo</code> (jonatack)</li>
+    <li>#21602 Add additional ban time fields to <code class="language-text highlighter-rouge">listbanned</code> (jarolrod)</li>
+    <li>#21679 Keep default argument value in correct type (promag)</li>
+    <li>#21718 Improve error message for <code class="language-text highlighter-rouge">getblock</code> invalid datatype (klementtan)</li>
+    <li>#21913 RPCHelpMan fixes (kallewoof)</li>
+    <li>#22021 <code class="language-text highlighter-rouge">bumpfee</code>/<code class="language-text highlighter-rouge">psbtbumpfee</code> fixes and updates (jonatack)</li>
+    <li>#22043 <code class="language-text highlighter-rouge">addpeeraddress</code> test coverage, code simplify/constness (jonatack)</li>
+    <li>#22327 cli: Avoid truncating <code class="language-text highlighter-rouge">-rpcwaittimeout</code> (MarcoFalke)</li>
+  </ul>
+
+  <h3 id="gui">GUI</h3>
+  <ul>
+    <li>#18948 Call setParent() in the parent’s context (hebasto)</li>
+    <li>#20482 Add depends qt fix for ARM macs (jonasschnelli)</li>
+    <li>#21836 scripted-diff: Replace three dots with ellipsis in the ui strings (hebasto)</li>
+    <li>#21935 Enable external signer support for GUI builds (Sjors)</li>
+    <li>#22133 Make QWindowsVistaStylePlugin available again (regression) (hebasto)</li>
+    <li>gui#4 UI external signer support (e.g. hardware wallet) (Sjors)</li>
+    <li>gui#13 Hide peer detail view if multiple are selected (promag)</li>
+    <li>gui#18 Add peertablesortproxy module (hebasto)</li>
+    <li>gui#21 Improve pruning tooltip (fluffypony, BitcoinErrorLog)</li>
+    <li>gui#72 Log static plugins meta data and used style (hebasto)</li>
+    <li>gui#79 Embed monospaced font (hebasto)</li>
+    <li>gui#85 Remove unused “What’s This” button in dialogs on Windows OS (hebasto)</li>
+    <li>gui#115 Replace “Hide tray icon” option with positive “Show tray icon” one (hebasto)</li>
+    <li>gui#118 Remove BDB version from the Information tab (hebasto)</li>
+    <li>gui#121 Early subscribe core signals in transaction table model (promag)</li>
+    <li>gui#123 Do not accept command while executing another one (hebasto)</li>
+    <li>gui#125 Enable changing the autoprune block space size in intro dialog (luke-jr)</li>
+    <li>gui#138 Unlock encrypted wallet “OK” button bugfix (mjdietzx)</li>
+    <li>gui#139 doc: Improve gui/src/qt README.md (jarolrod)</li>
+    <li>gui#154 Support macOS Dark mode (goums, Uplab)</li>
+    <li>gui#162 Add network to peers window and peer details (jonatack)</li>
+    <li>gui#163, bitcoin-core/gui#180 Peer details: replace Direction with Connection Type (jonatack)</li>
+    <li>gui#164 Handle peer addition/removal in a right way (hebasto)</li>
+    <li>gui#165 Save QSplitter state in QSettings (hebasto)</li>
+    <li>gui#173 Follow Qt docs when implementing rowCount and columnCount (hebasto)</li>
+    <li>gui#179 Add Type column to peers window, update peer details name/tooltip (jonatack)</li>
+    <li>gui#186 Add information to “Confirm fee bump” window (prayank23)</li>
+    <li>gui#189 Drop workaround for QTBUG-42503 which was fixed in Qt 5.5.0 (prusnak)</li>
+    <li>gui#194 Save/restore RPCConsole geometry only for window (hebasto)</li>
+    <li>gui#202 Fix right panel toggle in peers tab (RandyMcMillan)</li>
+    <li>gui#203 Display plain “Inbound” in peer details (jonatack)</li>
+    <li>gui#204 Drop buggy TableViewLastColumnResizingFixer class (hebasto)</li>
+    <li>gui#205, bitcoin-core/gui#229 Save/restore TransactionView and recentRequestsView tables column sizes (hebasto)</li>
+    <li>gui#206 Display fRelayTxes and <code class="language-text highlighter-rouge">bip152_highbandwidth_{to, from}</code> in peer details (jonatack)</li>
+    <li>gui#213 Add Copy Address Action to Payment Requests (jarolrod)</li>
+    <li>gui#214 Disable requests context menu actions when appropriate (jarolrod)</li>
+    <li>gui#217 Make warning label look clickable (jarolrod)</li>
+    <li>gui#219 Prevent the main window popup menu (hebasto)</li>
+    <li>gui#220 Do not translate file extensions (hebasto)</li>
+    <li>gui#221 RPCConsole translatable string fixes and improvements (jonatack)</li>
+    <li>gui#226 Add “Last Block” and “Last Tx” rows to peer details area (jonatack)</li>
+    <li>gui#233 qt test: Don’t bind to regtest port (achow101)</li>
+    <li>gui#243 Fix issue when disabling the auto-enabled blank wallet checkbox (jarolrod)</li>
+    <li>gui#246 Revert “qt: Use “fusion” style on macOS Big Sur with old Qt” (hebasto)</li>
+    <li>gui#248 For values of “Bytes transferred” and “Bytes/s” with 1000-based prefix names use 1000-based divisor instead of 1024-based (wodry)</li>
+    <li>gui#251 Improve URI/file handling message (hebasto)</li>
+    <li>gui#256 Save/restore column sizes of the tables in the Peers tab (hebasto)</li>
+    <li>gui#260 Handle exceptions isntead of crash (hebasto)</li>
+    <li>gui#263 Revamp context menus (hebasto)</li>
+    <li>gui#271 Don’t clear console prompt when font resizing (jarolrod)</li>
+    <li>gui#275 Support runtime appearance adjustment on macOS (hebasto)</li>
+    <li>gui#276 Elide long strings in their middle in the Peers tab (hebasto)</li>
+    <li>gui#281 Set shortcuts for console’s resize buttons (jarolrod)</li>
+    <li>gui#293 Enable wordWrap for Services (RandyMcMillan)</li>
+    <li>gui#296 Do not use QObject::tr plural syntax for numbers with a unit symbol (hebasto)</li>
+    <li>gui#297 Avoid unnecessary translations (hebasto)</li>
+    <li>gui#298 Peertableview alternating row colors (RandyMcMillan)</li>
+    <li>gui#300 Remove progress bar on modal overlay (brunoerg)</li>
+    <li>gui#309 Add access to the Peers tab from the network icon (hebasto)</li>
+    <li>gui#311 Peers Window rename ‘Peer id’ to ‘Peer’ (jarolrod)</li>
+    <li>gui#313 Optimize string concatenation by default (hebasto)</li>
+    <li>gui#325 Align numbers in the “Peer Id” column to the right (hebasto)</li>
+    <li>gui#329 Make console buttons look clickable (jarolrod)</li>
+    <li>gui#330 Allow prompt icon to be colorized (jarolrod)</li>
+    <li>gui#331 Make RPC console welcome message translation-friendly (hebasto)</li>
+    <li>gui#332 Replace disambiguation strings with translator comments (hebasto)</li>
+    <li>gui#335 test: Use QSignalSpy instead of QEventLoop (jarolrod)</li>
+    <li>gui#343 Improve the GUI responsiveness when progress dialogs are used (hebasto)</li>
+    <li>gui#361 Fix GUI segfault caused by bitcoin/bitcoin#22216 (ryanofsky)</li>
+    <li>gui#362 Add keyboard shortcuts to context menus (luke-jr)</li>
+    <li>gui#366 Dark Mode fixes/portability (luke-jr)</li>
+    <li>gui#375 Emit dataChanged signal to dynamically re-sort Peers table (hebasto)</li>
+    <li>gui#393 Fix regression in “Encrypt Wallet” menu item (hebasto)</li>
+    <li>gui#396 Ensure external signer option remains disabled without signers (achow101)</li>
+    <li>gui#406 Handle new added plurals in <code class="language-text highlighter-rouge">bitcoin_en.ts</code> (hebasto)</li>
+  </ul>
+
+  <h3 id="build-system-1">Build system</h3>
+  <ul>
+    <li>#17227 Add Android packaging support (icota)</li>
+    <li>#17920 guix: Build support for macOS (dongcarl)</li>
+    <li>#18298 Fix Qt processing of configure script for depends with DEBUG=1 (hebasto)</li>
+    <li>#19160 multiprocess: Add basic spawn and IPC support (ryanofsky)</li>
+    <li>#19504 Bump minimum python version to 3.6 (ajtowns)</li>
+    <li>#19522 fix building libconsensus with reduced exports for Darwin targets (fanquake)</li>
+    <li>#19683 Pin clang search paths for darwin host (dongcarl)</li>
+    <li>#19764 Split boost into build/host packages + bump + cleanup (dongcarl)</li>
+    <li>#19817 libtapi 1100.0.11 (fanquake)</li>
+    <li>#19846 enable unused member function diagnostic (Zero-1729)</li>
+    <li>#19867 Document and cleanup Qt hacks (fanquake)</li>
+    <li>#20046 Set <code class="language-text highlighter-rouge">CMAKE_INSTALL_RPATH</code> for native packages (ryanofsky)</li>
+    <li>#20223 Drop the leading 0 from the version number (achow101)</li>
+    <li>#20333 Remove <code class="language-text highlighter-rouge">native_biplist</code> dependency (fanquake)</li>
+    <li>#20353 configure: Support -fdebug-prefix-map and -fmacro-prefix-map (ajtowns)</li>
+    <li>#20359 Various config.site.in improvements and linting (dongcarl)</li>
+    <li>#20413 Require C++17 compiler (MarcoFalke)</li>
+    <li>#20419 Set minimum supported macOS to 10.14 (fanquake)</li>
+    <li>#20421 miniupnpc 2.2.2 (fanquake)</li>
+    <li>#20422 Mac deployment unification (fanquake)</li>
+    <li>#20424 Update univalue subtree (MarcoFalke)</li>
+    <li>#20449 Fix Windows installer build (achow101)</li>
+    <li>#20468 Warn when generating man pages for binaries built from a dirty branch (tylerchambers)</li>
+    <li>#20469 Avoid secp256k1.h include from system (dergoegge)</li>
+    <li>#20470 Replace genisoimage with xorriso (dongcarl)</li>
+    <li>#20471 Use C++17 in depends (fanquake)</li>
+    <li>#20496 Drop unneeded macOS framework dependencies (hebasto)</li>
+    <li>#20520 Do not force Precompiled Headers (PCH) for building Qt on Linux (hebasto)</li>
+    <li>#20549 Support make src/bitcoin-node and src/bitcoin-gui (promag)</li>
+    <li>#20565 Ensure PIC build for bdb on Android (BlockMechanic)</li>
+    <li>#20594 Fix getauxval calls in randomenv.cpp (jonasschnelli)</li>
+    <li>#20603 Update crc32c subtree (MarcoFalke)</li>
+    <li>#20609 configure: output notice that test binary is disabled by fuzzing (apoelstra)</li>
+    <li>#20619 guix: Quality of life improvements (dongcarl)</li>
+    <li>#20629 Improve id string robustness (dongcarl)</li>
+    <li>#20641 Use Qt top-level build facilities (hebasto)</li>
+    <li>#20650 Drop workaround for a fixed bug in Qt build system (hebasto)</li>
+    <li>#20673 Use more legible qmake commands in qt package (hebasto)</li>
+    <li>#20684 Define .INTERMEDIATE target once only (hebasto)</li>
+    <li>#20720 more robustly check for fcf-protection support (fanquake)</li>
+    <li>#20734 Make platform-specific targets available for proper platform builds only (hebasto)</li>
+    <li>#20936 build fuzz tests by default (danben)</li>
+    <li>#20937 guix: Make nsis reproducible by respecting SOURCE-DATE-EPOCH (dongcarl)</li>
+    <li>#20938 fix linking against -latomic when building for riscv (fanquake)</li>
+    <li>#20939 fix <code class="language-text highlighter-rouge">RELOC_SECTION</code> security check for bitcoin-util (fanquake)</li>
+    <li>#20963 gitian-linux: Build binaries for 64-bit POWER (continued) (laanwj)</li>
+    <li>#21036 gitian: Bump descriptors to focal for 22.0 (fanquake)</li>
+    <li>#21045 Adds switch to enable/disable randomized base address in MSVC builds (EthanHeilman)</li>
+    <li>#21065 make macOS HOST in download-osx generic (fanquake)</li>
+    <li>#21078 guix: only download sources for hosts being built (fanquake)</li>
+    <li>#21116 Disable –disable-fuzz-binary for gitian/guix builds (hebasto)</li>
+    <li>#21182 remove mostly pointless <code class="language-text highlighter-rouge">BOOST_PROCESS</code> macro (fanquake)</li>
+    <li>#21205 actually fail when Boost is missing (fanquake)</li>
+    <li>#21209 use newer source for libnatpmp (fanquake)</li>
+    <li>#21226 Fix fuzz binary compilation under windows (danben)</li>
+    <li>#21231 Add /opt/homebrew to path to look for boost libraries (fyquah)</li>
+    <li>#21239 guix: Add codesignature attachment support for osx+win (dongcarl)</li>
+    <li>#21250 Make <code class="language-text highlighter-rouge">HAVE_O_CLOEXEC</code> available outside LevelDB (bugfix) (theStack)</li>
+    <li>#21272 guix: Passthrough <code class="language-text highlighter-rouge">SDK_PATH</code> into container (dongcarl)</li>
+    <li>#21274 assumptions:  Assume C++17 (fanquake)</li>
+    <li>#21286 Bump minimum Qt version to 5.9.5 (hebasto)</li>
+    <li>#21298 guix: Bump time-machine, glibc, and linux-headers (dongcarl)</li>
+    <li>#21304 guix: Add guix-clean script + establish gc-root for container profiles (dongcarl)</li>
+    <li>#21320 fix libnatpmp macos cross compile (fanquake)</li>
+    <li>#21321 guix: Add curl to required tool list (hebasto)</li>
+    <li>#21333 set Unicode true for NSIS installer (fanquake)</li>
+    <li>#21339 Make <code class="language-text highlighter-rouge">AM_CONDITIONAL([ENABLE_EXTERNAL_SIGNER])</code> unconditional (hebasto)</li>
+    <li>#21349 Fix fuzz-cuckoocache cross-compiling with DEBUG=1 (hebasto)</li>
+    <li>#21354 build, doc: Drop no longer required packages from macOS cross-compiling dependencies (hebasto)</li>
+    <li>#21363 build, qt: Improve Qt static plugins/libs check code (hebasto)</li>
+    <li>#21375 guix: Misc feedback-based fixes + hier restructuring (dongcarl)</li>
+    <li>#21376 Qt 5.12.10 (fanquake)</li>
+    <li>#21382 Clean remnants of QTBUG-34748 fix (hebasto)</li>
+    <li>#21400 Fix regression introduced in #21363 (hebasto)</li>
+    <li>#21403 set –build when configuring packages in depends (fanquake)</li>
+    <li>#21421 don’t try and use -fstack-clash-protection on Windows (fanquake)</li>
+    <li>#21423 Cleanups and follow ups after bumping Qt to 5.12.10 (hebasto)</li>
+    <li>#21427 Fix <code class="language-text highlighter-rouge">id_string</code> invocations (dongcarl)</li>
+    <li>#21430 Add -Werror=implicit-fallthrough compile flag (hebasto)</li>
+    <li>#21457 Split libtapi and clang out of <code class="language-text highlighter-rouge">native_cctools</code> (fanquake)</li>
+    <li>#21462 guix: Add guix-{attest,verify} scripts (dongcarl)</li>
+    <li>#21495 build, qt: Fix static builds on macOS Big Sur (hebasto)</li>
+    <li>#21497 Do not opt-in unused CoreWLAN stuff in depends for macOS (hebasto)</li>
+    <li>#21543 Enable safe warnings for msvc builds (hebasto)</li>
+    <li>#21565 Make <code class="language-text highlighter-rouge">bitcoin_qt.m4</code> more generic (fanquake)</li>
+    <li>#21610 remove -Wdeprecated-register from NOWARN flags (fanquake)</li>
+    <li>#21613 enable -Wdocumentation (fanquake)</li>
+    <li>#21629 Fix configuring when building depends with <code class="language-text highlighter-rouge">NO_BDB=1</code> (fanquake)</li>
+    <li>#21654 build, qt: Make Qt rcc output always deterministic (hebasto)</li>
+    <li>#21655 build, qt: No longer need to set <code class="language-text highlighter-rouge">QT_RCC_TEST=1</code> for determinism (hebasto)</li>
+    <li>#21658 fix make deploy for arm64-darwin (sgulls)</li>
+    <li>#21694 Use XLIFF file to provide more context to Transifex translators (hebasto)</li>
+    <li>#21708, bitcoin/bitcoin#21593 Drop pointless sed commands (hebasto)</li>
+    <li>#21731 Update msvc build to use Qt5.12.10 binaries (sipsorcery)</li>
+    <li>#21733 Re-add command to install vcpkg (dplusplus1024)</li>
+    <li>#21793 Use <code class="language-text highlighter-rouge">-isysroot</code> over <code class="language-text highlighter-rouge">--sysroot</code> on macOS (fanquake)</li>
+    <li>#21869 Add missing <code class="language-text highlighter-rouge">-D_LIBCPP_DEBUG=1</code> to debug flags (MarcoFalke)</li>
+    <li>#21889 macho: check for control flow instrumentation (fanquake)</li>
+    <li>#21920 Improve macro for testing -latomic requirement (MarcoFalke)</li>
+    <li>#21991 libevent 2.1.12-stable (fanquake)</li>
+    <li>#22054 Bump Qt version to 5.12.11 (hebasto)</li>
+    <li>#22063 Use Qt archive of the same version as the compiled binaries (hebasto)</li>
+    <li>#22070 Don’t use cf-protection when targeting arm-apple-darwin (fanquake)</li>
+    <li>#22071 Latest config.guess and config.sub (fanquake)</li>
+    <li>#22075 guix: Misc leftover usability improvements (dongcarl)</li>
+    <li>#22123 Fix qt.mk for mac arm64 (promag)</li>
+    <li>#22174 build, qt: Fix libraries linking order for Linux hosts (hebasto)</li>
+    <li>#22182 guix: Overhaul how guix-{attest,verify} works and hierarchy (dongcarl)</li>
+    <li>#22186 build, qt: Fix compiling qt package in depends with GCC 11 (hebasto)</li>
+    <li>#22199 macdeploy: minor fixups and simplifications (fanquake)</li>
+    <li>#22230 Fix MSVC linker /SubSystem option for bitcoin-qt.exe (hebasto)</li>
+    <li>#22234 Mark print-% target as phony (dgoncharov)</li>
+    <li>#22238 improve detection of eBPF support (fanquake)</li>
+    <li>#22258 Disable deprecated-copy warning only when external warnings are enabled (MarcoFalke)</li>
+    <li>#22320 set minimum required Boost to 1.64.0 (fanquake)</li>
+    <li>#22348 Fix cross build for Windows with Boost Process (hebasto)</li>
+    <li>#22365 guix: Avoid relying on newer symbols by rebasing our cross toolchains on older glibcs (dongcarl)</li>
+    <li>#22381 guix: Test security-check sanity before performing them (with macOS) (fanquake)</li>
+    <li>#22405 Remove –enable-glibc-back-compat from Guix build (fanquake)</li>
+    <li>#22406 Remove –enable-determinism configure option (fanquake)</li>
+    <li>#22410 Avoid GCC 7.1 ABI change warning in guix build (sipa)</li>
+    <li>#22436 use aarch64 Clang if cross-compiling for darwin on aarch64 (fanquake)</li>
+    <li>#22465 guix: Pin kernel-header version, time-machine to upstream 1.3.0 commit (dongcarl)</li>
+    <li>#22511 guix: Silence <code class="language-text highlighter-rouge">getent(1)</code> invocation, doc fixups (dongcarl)</li>
+    <li>#22531 guix: Fixes to guix-{attest,verify} (achow101)</li>
+    <li>#22642 release: Release with separate sha256sums and sig files (dongcarl)</li>
+    <li>#22685 clientversion: No suffix <code class="language-text highlighter-rouge">#if CLIENT_VERSION_IS_RELEASE</code> (dongcarl)</li>
+    <li>#22713 Fix build with Boost 1.77.0 (sizeofvoid)</li>
+  </ul>
+
+  <h3 id="tests-and-qa">Tests and QA</h3>
+  <ul>
+    <li>#14604 Add test and refactor <code class="language-text highlighter-rouge">feature_block.py</code> (sanket1729)</li>
+    <li>#17556 Change <code class="language-text highlighter-rouge">feature_config_args.py</code> not to rely on strange regtest=0 behavior (ryanofsky)</li>
+    <li>#18795 wallet issue with orphaned rewards (domob1812)</li>
+    <li>#18847 compressor: Use a prevector in CompressScript serialization (jb55)</li>
+    <li>#19259 fuzz: Add fuzzing harness for LoadMempool(…) and DumpMempool(…) (practicalswift)</li>
+    <li>#19315 Allow outbound &amp; block-relay-only connections in functional tests. (amitiuttarwar)</li>
+    <li>#19698 Apply strict verification flags for transaction tests and assert backwards compatibility (glozow)</li>
+    <li>#19801 Check for all possible <code class="language-text highlighter-rouge">OP_CLTV</code> fail reasons in <code class="language-text highlighter-rouge">feature_cltv.py</code> (BIP 65) (theStack)</li>
+    <li>#19893 Remove or explain syncwithvalidationinterfacequeue (MarcoFalke)</li>
+    <li>#19972 fuzz: Add fuzzing harness for node eviction logic (practicalswift)</li>
+    <li>#19982 Fix inconsistent lock order in <code class="language-text highlighter-rouge">wallet_tests/CreateWallet</code> (hebasto)</li>
+    <li>#20000 Fix creation of “std::string”s with \0s (vasild)</li>
+    <li>#20047 Use <code class="language-text highlighter-rouge">wait_for_{block,header}</code> helpers in <code class="language-text highlighter-rouge">p2p_fingerprint.py</code> (theStack)</li>
+    <li>#20171 Add functional test <code class="language-text highlighter-rouge">test_txid_inv_delay</code> (ariard)</li>
+    <li>#20189 Switch to BIP341’s suggested scheme for outputs without script (sipa)</li>
+    <li>#20248 Fix length of R check in <code class="language-text highlighter-rouge">key_signature_tests</code> (dgpv)</li>
+    <li>#20276, bitcoin/bitcoin#20385, bitcoin/bitcoin#20688, bitcoin/bitcoin#20692 Run various mempool tests even with wallet disabled (mjdietzx)</li>
+    <li>#20323 Create or use existing properly initialized NodeContexts (dongcarl)</li>
+    <li>#20354 Add <code class="language-text highlighter-rouge">feature_taproot.py --previous_release</code> (MarcoFalke)</li>
+    <li>#20370 fuzz: Version handshake (MarcoFalke)</li>
+    <li>#20377 fuzz: Fill various small fuzzing gaps (practicalswift)</li>
+    <li>#20425 fuzz: Make CAddrMan fuzzing harness deterministic (practicalswift)</li>
+    <li>#20430 Sanitizers: Add suppression for unsigned-integer-overflow in libstdc++ (jonasschnelli)</li>
+    <li>#20437 fuzz: Avoid time-based “non-determinism” in fuzzing harnesses by using mocked GetTime() (practicalswift)</li>
+    <li>#20458 Add <code class="language-text highlighter-rouge">is_bdb_compiled</code> helper (Sjors)</li>
+    <li>#20466 Fix intermittent <code class="language-text highlighter-rouge">p2p_fingerprint</code> issue (MarcoFalke)</li>
+    <li>#20472 Add testing of ParseInt/ParseUInt edge cases with leading +/-/0:s (practicalswift)</li>
+    <li>#20507 sync: print proper lock order location when double lock is detected (vasild)</li>
+    <li>#20522 Fix sync issue in <code class="language-text highlighter-rouge">disconnect_p2ps</code> (amitiuttarwar)</li>
+    <li>#20524 Move <code class="language-text highlighter-rouge">MIN_VERSION_SUPPORTED</code> to p2p.py (jnewbery)</li>
+    <li>#20540 Fix <code class="language-text highlighter-rouge">wallet_multiwallet</code> issue on windows (MarcoFalke)</li>
+    <li>#20560 fuzz: Link all targets once (MarcoFalke)</li>
+    <li>#20567 Add option to git-subtree-check to do full check, add help (laanwj)</li>
+    <li>#20569 Fix intermittent <code class="language-text highlighter-rouge">wallet_multiwallet</code> issue with <code class="language-text highlighter-rouge">got_loading_error</code> (MarcoFalke)</li>
+    <li>#20613 Use Popen.wait instead of RPC in <code class="language-text highlighter-rouge">assert_start_raises_init_error</code> (MarcoFalke)</li>
+    <li>#20663 fuzz: Hide <code class="language-text highlighter-rouge">script_assets_test_minimizer</code> (MarcoFalke)</li>
+    <li>#20674 fuzz: Call SendMessages after ProcessMessage to increase coverage (MarcoFalke)</li>
+    <li>#20683 Fix restart node race (MarcoFalke)</li>
+    <li>#20686 fuzz: replace CNode code with fuzz/util.h::ConsumeNode() (jonatack)</li>
+    <li>#20733 Inline non-member functions with body in fuzzing headers (pstratem)</li>
+    <li>#20737 Add missing assignment in <code class="language-text highlighter-rouge">mempool_resurrect.py</code> (MarcoFalke)</li>
+    <li>#20745 Correct <code class="language-text highlighter-rouge">epoll_ctl</code> data race suppression (hebasto)</li>
+    <li>#20748 Add race:SendZmqMessage tsan suppression (MarcoFalke)</li>
+    <li>#20760 Set correct nValue for multi-op-return policy check (MarcoFalke)</li>
+    <li>#20761 fuzz: Check that <code class="language-text highlighter-rouge">NULL_DATA</code> is unspendable (MarcoFalke)</li>
+    <li>#20765 fuzz: Check that certain script TxoutType are nonstandard (mjdietzx)</li>
+    <li>#20772 fuzz: Bolster ExtractDestination(s) checks (mjdietzx)</li>
+    <li>#20789 fuzz: Rework strong and weak net enum fuzzing (MarcoFalke)</li>
+    <li>#20828 fuzz: Introduce CallOneOf helper to replace switch-case (MarcoFalke)</li>
+    <li>#20839 fuzz: Avoid extraneous copy of input data, using Span&lt;&gt; (MarcoFalke)</li>
+    <li>#20844 Add sanitizer suppressions for AMD EPYC CPUs (MarcoFalke)</li>
+    <li>#20857 Update documentation in <code class="language-text highlighter-rouge">feature_csv_activation.py</code> (PiRK)</li>
+    <li>#20876 Replace getmempoolentry with testmempoolaccept in MiniWallet (MarcoFalke)</li>
+    <li>#20881 fuzz: net permission flags in net processing (MarcoFalke)</li>
+    <li>#20882 fuzz: Add missing muhash registration (MarcoFalke)</li>
+    <li>#20908 fuzz: Use mocktime in <code class="language-text highlighter-rouge">process_message*</code> fuzz targets (MarcoFalke)</li>
+    <li>#20915 fuzz: Fail if message type is not fuzzed (MarcoFalke)</li>
+    <li>#20946 fuzz: Consolidate fuzzing TestingSetup initialization (dongcarl)</li>
+    <li>#20954 Declare <code class="language-text highlighter-rouge">nodes</code> type <code class="language-text highlighter-rouge">in test_framework.py</code> (kiminuo)</li>
+    <li>#20955 Fix <code class="language-text highlighter-rouge">get_previous_releases.py</code> for aarch64 (MarcoFalke)</li>
+    <li>#20969 check that getblockfilter RPC fails without block filter index (theStack)</li>
+    <li>#20971 Work around libFuzzer deadlock (MarcoFalke)</li>
+    <li>#20993 Store subversion (user agent) as string in <code class="language-text highlighter-rouge">msg_version</code> (theStack)</li>
+    <li>#20995 fuzz: Avoid initializing version to less than <code class="language-text highlighter-rouge">MIN_PEER_PROTO_VERSION</code> (MarcoFalke)</li>
+    <li>#20998 Fix BlockToJsonVerbose benchmark (martinus)</li>
+    <li>#21003 Move MakeNoLogFileContext to <code class="language-text highlighter-rouge">libtest_util</code>, and use it in bench (MarcoFalke)</li>
+    <li>#21008 Fix zmq test flakiness, improve speed (theStack)</li>
+    <li>#21023 fuzz: Disable shuffle when merge=1 (MarcoFalke)</li>
+    <li>#21037 fuzz: Avoid designated initialization (C++20) in fuzz tests (practicalswift)</li>
+    <li>#21042 doc, test: Improve <code class="language-text highlighter-rouge">setup_clean_chain</code> documentation (fjahr)</li>
+    <li>#21080 fuzz: Configure check for main function (take 2) (MarcoFalke)</li>
+    <li>#21084 Fix timeout decrease in <code class="language-text highlighter-rouge">feature_assumevalid</code> (brunoerg)</li>
+    <li>#21096 Re-add dead code detection (flack)</li>
+    <li>#21100 Remove unused function <code class="language-text highlighter-rouge">xor_bytes</code> (theStack)</li>
+    <li>#21115 Fix Windows cross build (hebasto)</li>
+    <li>#21117 Remove <code class="language-text highlighter-rouge">assert_blockchain_height</code> (MarcoFalke)</li>
+    <li>#21121 Small unit test improvements, including helper to make mempool transaction (amitiuttarwar)</li>
+    <li>#21124 Remove unnecessary assignment in bdb (brunoerg)</li>
+    <li>#21125 Change <code class="language-text highlighter-rouge">BOOST_CHECK</code> to <code class="language-text highlighter-rouge">BOOST_CHECK_EQUAL</code> for paths (kiminuo)</li>
+    <li>#21142, bitcoin/bitcoin#21512 fuzz: Add <code class="language-text highlighter-rouge">tx_pool</code> fuzz target (MarcoFalke)</li>
+    <li>#21165 Use mocktime in <code class="language-text highlighter-rouge">test_seed_peers</code> (dhruv)</li>
+    <li>#21169 fuzz: Add RPC interface fuzzing. Increase fuzzing coverage from 65% to 70% (practicalswift)</li>
+    <li>#21170 bench: Add benchmark to write json into a string (martinus)</li>
+    <li>#21178 Run <code class="language-text highlighter-rouge">mempool_reorg.py</code> even with wallet disabled (DariusParvin)</li>
+    <li>#21185 fuzz: Remove expensive and redundant muhash from crypto fuzz target (MarcoFalke)</li>
+    <li>#21200 Speed up <code class="language-text highlighter-rouge">rpc_blockchain.py</code> by removing miniwallet.generate() (MarcoFalke)</li>
+    <li>#21211 Move <code class="language-text highlighter-rouge">P2WSH_OP_TRUE</code> to shared test library (MarcoFalke)</li>
+    <li>#21228 Avoid comparision of integers with different signs (jonasschnelli)</li>
+    <li>#21230 Fix <code class="language-text highlighter-rouge">NODE_NETWORK_LIMITED_MIN_BLOCKS</code> disconnection (MarcoFalke)</li>
+    <li>#21252 Add missing wait for sync to <code class="language-text highlighter-rouge">feature_blockfilterindex_prune</code> (MarcoFalke)</li>
+    <li>#21254 Avoid connecting to real network when running tests (MarcoFalke)</li>
+    <li>#21264 fuzz: Two scripted diff renames (MarcoFalke)</li>
+    <li>#21280 Bug fix in <code class="language-text highlighter-rouge">transaction_tests</code> (glozow)</li>
+    <li>#21293 Replace accidentally placed bit-OR with logical-OR (hebasto)</li>
+    <li>#21297 <code class="language-text highlighter-rouge">feature_blockfilterindex_prune.py</code> improvements (jonatack)</li>
+    <li>#21310 zmq test: fix sync-up by matching notification to generated block (theStack)</li>
+    <li>#21334 Additional BIP9 tests (Sjors)</li>
+    <li>#21338 Add functional test for anchors.dat (brunoerg)</li>
+    <li>#21345 Bring <code class="language-text highlighter-rouge">p2p_leak.py</code> up to date (mzumsande)</li>
+    <li>#21357 Unconditionally check for fRelay field in test framework (jarolrod)</li>
+    <li>#21358 fuzz: Add missing include (<code class="language-text highlighter-rouge">test/util/setup_common.h</code>) (MarcoFalke)</li>
+    <li>#21371 fuzz: fix gcc Woverloaded-virtual build warnings (jonatack)</li>
+    <li>#21373 Generate fewer blocks in <code class="language-text highlighter-rouge">feature_nulldummy</code> to fix timeouts, speed up (jonatack)</li>
+    <li>#21390 Test improvements for UTXO set hash tests (fjahr)</li>
+    <li>#21410 increase <code class="language-text highlighter-rouge">rpc_timeout</code> for fundrawtx <code class="language-text highlighter-rouge">test_transaction_too_large</code> (jonatack)</li>
+    <li>#21411 add logging, reduce blocks, move <code class="language-text highlighter-rouge">sync_all</code> in <code class="language-text highlighter-rouge">wallet_</code> groups (jonatack)</li>
+    <li>#21438 Add ParseUInt8() test coverage (jonatack)</li>
+    <li>#21443 fuzz: Implement <code class="language-text highlighter-rouge">fuzzed_dns_lookup_function</code> as a lambda (practicalswift)</li>
+    <li>#21445 cirrus: Use SSD cluster for speedup (MarcoFalke)</li>
+    <li>#21477 Add test for CNetAddr::ToString IPv6 address formatting (RFC 5952) (practicalswift)</li>
+    <li>#21487 fuzz: Use ConsumeWeakEnum in addrman for service flags (MarcoFalke)</li>
+    <li>#21488 Add ParseUInt16() unit test and fuzz coverage (jonatack)</li>
+    <li>#21491 test: remove duplicate assertions in util_tests (jonatack)</li>
+    <li>#21522 fuzz: Use PickValue where possible (MarcoFalke)</li>
+    <li>#21531 remove qt byteswap compattests (fanquake)</li>
+    <li>#21557 small cleanup in RPCNestedTests tests (fanquake)</li>
+    <li>#21586 Add missing suppression for signed-integer-overflow:txmempool.cpp (MarcoFalke)</li>
+    <li>#21592 Remove option to make TestChain100Setup non-deterministic (MarcoFalke)</li>
+    <li>#21597 Document <code class="language-text highlighter-rouge">race:validation_chainstatemanager_tests</code> suppression (MarcoFalke)</li>
+    <li>#21599 Replace file level integer overflow suppression with function level suppression (practicalswift)</li>
+    <li>#21604 Document why no symbol names can be used for suppressions (MarcoFalke)</li>
+    <li>#21606 fuzz: Extend psbt fuzz target a bit (MarcoFalke)</li>
+    <li>#21617 fuzz: Fix uninitialized read in i2p test (MarcoFalke)</li>
+    <li>#21630 fuzz: split FuzzedSock interface and implementation (vasild)</li>
+    <li>#21634 Skip SQLite fsyncs while testing (achow101)</li>
+    <li>#21669 Remove spurious double lock tsan suppressions by bumping to clang-12 (MarcoFalke)</li>
+    <li>#21676 Use mocktime to avoid intermittent failure in <code class="language-text highlighter-rouge">rpc_tests</code> (MarcoFalke)</li>
+    <li>#21677 fuzz: Avoid use of low file descriptor ids (which may be in use) in FuzzedSock (practicalswift)</li>
+    <li>#21678 Fix TestPotentialDeadLockDetected suppression (hebasto)</li>
+    <li>#21689 Remove intermittently failing and not very meaningful <code class="language-text highlighter-rouge">BOOST_CHECK</code> in <code class="language-text highlighter-rouge">cnetaddr_basic</code> (practicalswift)</li>
+    <li>#21691 Check that no versionbits are re-used (MarcoFalke)</li>
+    <li>#21707 Extend functional tests for addr relay (mzumsande)</li>
+    <li>#21712 Test default <code class="language-text highlighter-rouge">include_mempool</code> value of gettxout (promag)</li>
+    <li>#21738 Use clang-12 for ASAN, Add missing suppression (MarcoFalke)</li>
+    <li>#21740 add new python linter to check file names and permissions (windsok)</li>
+    <li>#21749 Bump shellcheck version (hebasto)</li>
+    <li>#21754 Run <code class="language-text highlighter-rouge">feature_cltv</code> with MiniWallet (MarcoFalke)</li>
+    <li>#21762 Speed up <code class="language-text highlighter-rouge">mempool_spend_coinbase.py</code> (MarcoFalke)</li>
+    <li>#21773 fuzz: Ensure prevout is consensus-valid (MarcoFalke)</li>
+    <li>#21777 Fix <code class="language-text highlighter-rouge">feature_notifications.py</code> intermittent issue (MarcoFalke)</li>
+    <li>#21785 Fix intermittent issue in <code class="language-text highlighter-rouge">p2p_addr_relay.py</code> (MarcoFalke)</li>
+    <li>#21787 Fix off-by-ones in <code class="language-text highlighter-rouge">rpc_fundrawtransaction</code> assertions (jonatack)</li>
+    <li>#21792 Fix intermittent issue in <code class="language-text highlighter-rouge">p2p_segwit.py</code> (MarcoFalke)</li>
+    <li>#21795 fuzz: Terminate immediately if a fuzzing harness tries to perform a DNS lookup (belt and suspenders) (practicalswift)</li>
+    <li>#21798 fuzz: Create a block template in <code class="language-text highlighter-rouge">tx_pool</code> targets (MarcoFalke)</li>
+    <li>#21804 Speed up <code class="language-text highlighter-rouge">p2p_segwit.py</code> (jnewbery)</li>
+    <li>#21810 fuzz: Various RPC fuzzer follow-ups (practicalswift)</li>
+    <li>#21814 Fix <code class="language-text highlighter-rouge">feature_config_args.py</code> intermittent issue (MarcoFalke)</li>
+    <li>#21821 Add missing test for empty P2WSH redeem (MarcoFalke)</li>
+    <li>#21822 Resolve bug in <code class="language-text highlighter-rouge">interface_bitcoin_cli.py</code> (klementtan)</li>
+    <li>#21846 fuzz: Add <code class="language-text highlighter-rouge">-fsanitize=integer</code> suppression needed for RPC fuzzer (<code class="language-text highlighter-rouge">generateblock</code>) (practicalswift)</li>
+    <li>#21849 fuzz: Limit toxic test globals to their respective scope (MarcoFalke)</li>
+    <li>#21867 use MiniWallet for <code class="language-text highlighter-rouge">p2p_blocksonly.py</code> (theStack)</li>
+    <li>#21873 minor fixes &amp; improvements for files linter test (windsok)</li>
+    <li>#21874 fuzz: Add <code class="language-text highlighter-rouge">WRITE_ALL_FUZZ_TARGETS_AND_ABORT</code> (MarcoFalke)</li>
+    <li>#21884 fuzz: Remove unused –enable-danger-fuzz-link-all option (MarcoFalke)</li>
+    <li>#21890 fuzz: Limit ParseISO8601DateTime fuzzing to 32-bit (MarcoFalke)</li>
+    <li>#21891 fuzz: Remove strprintf test cases that are known to fail (MarcoFalke)</li>
+    <li>#21892 fuzz: Avoid excessively large min fee rate in <code class="language-text highlighter-rouge">tx_pool</code> (MarcoFalke)</li>
+    <li>#21895 Add TSA annotations to the WorkQueue class members (hebasto)</li>
+    <li>#21900 use MiniWallet for <code class="language-text highlighter-rouge">feature_csv_activation.py</code> (theStack)</li>
+    <li>#21909 fuzz: Limit max insertions in timedata fuzz test (MarcoFalke)</li>
+    <li>#21922 fuzz: Avoid timeout in EncodeBase58 (MarcoFalke)</li>
+    <li>#21927 fuzz: Run const CScript member functions only once (MarcoFalke)</li>
+    <li>#21929 fuzz: Remove incorrect float round-trip serialization test (MarcoFalke)</li>
+    <li>#21936 fuzz: Terminate immediately if a fuzzing harness tries to create a TCP socket (belt and suspenders) (practicalswift)</li>
+    <li>#21941 fuzz: Call const member functions in addrman fuzz test only once (MarcoFalke)</li>
+    <li>#21945 add P2PK support to MiniWallet (theStack)</li>
+    <li>#21948 Fix off-by-one in mockscheduler test RPC (MarcoFalke)</li>
+    <li>#21953 fuzz: Add <code class="language-text highlighter-rouge">utxo_snapshot</code> target (MarcoFalke)</li>
+    <li>#21970 fuzz: Add missing CheckTransaction before CheckTxInputs (MarcoFalke)</li>
+    <li>#21989 Use <code class="language-text highlighter-rouge">COINBASE_MATURITY</code> in functional tests (kiminuo)</li>
+    <li>#22003 Add thread safety annotations (ajtowns)</li>
+    <li>#22004 fuzz: Speed up transaction fuzz target (MarcoFalke)</li>
+    <li>#22005 fuzz: Speed up banman fuzz target (MarcoFalke)</li>
+    <li>#22029 [fuzz] Improve transport deserialization fuzz test coverage (dhruv)</li>
+    <li>#22048 MiniWallet: introduce enum type for output mode (theStack)</li>
+    <li>#22057 use MiniWallet (P2PK mode) for <code class="language-text highlighter-rouge">feature_dersig.py</code> (theStack)</li>
+    <li>#22065 Mark <code class="language-text highlighter-rouge">CheckTxInputs</code> <code class="language-text highlighter-rouge">[[nodiscard]]</code>. Avoid UUM in fuzzing harness <code class="language-text highlighter-rouge">coins_view</code> (practicalswift)</li>
+    <li>#22069 fuzz: don’t try and use fopencookie() when building for Android (fanquake)</li>
+    <li>#22082 update nanobench from release 4.0.0 to 4.3.4 (martinus)</li>
+    <li>#22086 remove BasicTestingSetup from unit tests that don’t need it (fanquake)</li>
+    <li>#22089 MiniWallet: fix fee calculation for P2PK and check tx vsize (theStack)</li>
+    <li>#21107, bitcoin/bitcoin#22092 Convert documentation into type annotations (fanquake)</li>
+    <li>#22095 Additional BIP32 test vector for hardened derivation with leading zeros (kristapsk)</li>
+    <li>#22103 Fix IPv6 check on BSD systems (n-thumann)</li>
+    <li>#22118 check anchors.dat when node starts for the first time (brunoerg)</li>
+    <li>#22120 <code class="language-text highlighter-rouge">p2p_invalid_block</code>: Check that a block rejected due to too-new tim… (willcl-ark)</li>
+    <li>#22153 Fix <code class="language-text highlighter-rouge">p2p_leak.py</code> intermittent failure (mzumsande)</li>
+    <li>#22169 p2p, rpc, fuzz: various tiny follow-ups (jonatack)</li>
+    <li>#22176 Correct outstanding -Werror=sign-compare errors (Empact)</li>
+    <li>#22180 fuzz: Increase branch coverage of the float fuzz target (MarcoFalke)</li>
+    <li>#22187 Add <code class="language-text highlighter-rouge">sync_blocks</code> in <code class="language-text highlighter-rouge">wallet_orphanedreward.py</code> (domob1812)</li>
+    <li>#22201 Fix TestShell to allow running in Jupyter Notebook (josibake)</li>
+    <li>#22202 Add temporary coinstats suppressions (MarcoFalke)</li>
+    <li>#22203 Use ConnmanTestMsg from test lib in <code class="language-text highlighter-rouge">denialofservice_tests</code> (MarcoFalke)</li>
+    <li>#22210 Use MiniWallet in <code class="language-text highlighter-rouge">test_no_inherited_signaling</code> RBF test (MarcoFalke)</li>
+    <li>#22224 Update msvc and appveyor builds to use Qt5.12.11 binaries (sipsorcery)</li>
+    <li>#22249 Kill process group to avoid dangling processes when using <code class="language-text highlighter-rouge">--failfast</code> (S3RK)</li>
+    <li>#22267 fuzz: Speed up crypto fuzz target (MarcoFalke)</li>
+    <li>#22270 Add bitcoin-util tests (+refactors) (MarcoFalke)</li>
+    <li>#22271 fuzz: Assert roundtrip equality for <code class="language-text highlighter-rouge">CPubKey</code> (theStack)</li>
+    <li>#22279 fuzz: add missing ECCVerifyHandle to <code class="language-text highlighter-rouge">base_encode_decode</code> (apoelstra)</li>
+    <li>#22292 bench, doc: benchmarking updates and fixups (jonatack)</li>
+    <li>#22306 Improvements to <code class="language-text highlighter-rouge">p2p_addr_relay.py</code> (amitiuttarwar)</li>
+    <li>#22310 Add functional test for replacement relay fee check (ariard)</li>
+    <li>#22311 Add missing syncwithvalidationinterfacequeue in <code class="language-text highlighter-rouge">p2p_blockfilters</code> (MarcoFalke)</li>
+    <li>#22313 Add missing <code class="language-text highlighter-rouge">sync_all</code> to <code class="language-text highlighter-rouge">feature_coinstatsindex</code> (MarcoFalke)</li>
+    <li>#22322 fuzz: Check banman roundtrip (MarcoFalke)</li>
+    <li>#22363 Use <code class="language-text highlighter-rouge">script_util</code> helpers for creating P2{PKH,SH,WPKH,WSH} scripts (theStack)</li>
+    <li>#22399 fuzz: Rework CTxDestination fuzzing (MarcoFalke)</li>
+    <li>#22408 add tests for <code class="language-text highlighter-rouge">bad-txns-prevout-null</code> reject reason (theStack)</li>
+    <li>#22445 fuzz: Move implementations of non-template fuzz helpers from util.h to util.cpp (sriramdvt)</li>
+    <li>#22446 Fix <code class="language-text highlighter-rouge">wallet_listdescriptors.py</code> if bdb is not compiled (hebasto)</li>
+    <li>#22447 Whitelist <code class="language-text highlighter-rouge">rpc_rawtransaction</code> peers to speed up tests (jonatack)</li>
+    <li>#22742 Use proper target in <code class="language-text highlighter-rouge">do_fund_send</code> (S3RK)</li>
+  </ul>
+
+  <h3 id="miscellaneous">Miscellaneous</h3>
+  <ul>
+    <li>#19337 sync: Detect double lock from the same thread (vasild)</li>
+    <li>#19809 log: Prefix log messages with function name and source code location if -logsourcelocations is set (practicalswift)</li>
+    <li>#19866 eBPF Linux tracepoints (jb55)</li>
+    <li>#20024 init: Fix incorrect warning “Reducing -maxconnections from N to N-1, because of system limitations” (practicalswift)</li>
+    <li>#20145 contrib: Add getcoins.py script to get coins from (signet) faucet (kallewoof)</li>
+    <li>#20255 util: Add assume() identity function (MarcoFalke)</li>
+    <li>#20288 script, doc: Contrib/seeds updates (jonatack)</li>
+    <li>#20358 src/randomenv.cpp: Fix build on uclibc (ffontaine)</li>
+    <li>#20406 util: Avoid invalid integer negation in formatmoney and valuefromamount (practicalswift)</li>
+    <li>#20434 contrib: Parse elf directly for symbol and security checks (laanwj)</li>
+    <li>#20451 lint: Run mypy over contrib/devtools (fanquake)</li>
+    <li>#20476 contrib: Add test for elf symbol-check (laanwj)</li>
+    <li>#20530 lint: Update cppcheck linter to c++17 and improve explicit usage (fjahr)</li>
+    <li>#20589 log: Clarify that failure to read/write <code class="language-text highlighter-rouge">fee_estimates.dat</code> is non-fatal (MarcoFalke)</li>
+    <li>#20602 util: Allow use of c++14 chrono literals (MarcoFalke)</li>
+    <li>#20605 init: Signal-safe instant shutdown (laanwj)</li>
+    <li>#20608 contrib: Add symbol check test for PE binaries (fanquake)</li>
+    <li>#20689 contrib: Replace binary verification script verify.sh with python rewrite (theStack)</li>
+    <li>#20715 util: Add argsmanager::getcommand() and use it in bitcoin-wallet (MarcoFalke)</li>
+    <li>#20735 script: Remove outdated extract-osx-sdk.sh (hebasto)</li>
+    <li>#20817 lint: Update list of spelling linter false positives, bump to codespell 2.0.0 (theStack)</li>
+    <li>#20884 script: Improve robustness of bitcoind.service on startup (hebasto)</li>
+    <li>#20906 contrib: Embed c++11 patch in <code class="language-text highlighter-rouge">install_db4.sh</code> (gruve-p)</li>
+    <li>#21004 contrib: Fix docker args conditional in gitian-build (setpill)</li>
+    <li>#21007 bitcoind: Add -daemonwait option to wait for initialization (laanwj)</li>
+    <li>#21041 log: Move “Pre-allocating up to position 0x[…] in […].dat” log message to debug category (practicalswift)</li>
+    <li>#21059 Drop boost/preprocessor dependencies (hebasto)</li>
+    <li>#21087 guix: Passthrough <code class="language-text highlighter-rouge">BASE_CACHE</code> into container (dongcarl)</li>
+    <li>#21088 guix: Jump forwards in time-machine and adapt (dongcarl)</li>
+    <li>#21089 guix: Add support for powerpc64{,le} (dongcarl)</li>
+    <li>#21110 util: Remove boost <code class="language-text highlighter-rouge">posix_time</code> usage from <code class="language-text highlighter-rouge">gettime*</code> (fanquake)</li>
+    <li>#21111 Improve OpenRC initscript (parazyd)</li>
+    <li>#21123 code style: Add EditorConfig file (kiminuo)</li>
+    <li>#21173 util: Faster hexstr =&gt; 13% faster blocktojson (martinus)</li>
+    <li>#21221 tools: Allow argument/parameter bin packing in clang-format (jnewbery)</li>
+    <li>#21244 Move GetDataDir to ArgsManager (kiminuo)</li>
+    <li>#21255 contrib: Run test-symbol-check for risc-v (fanquake)</li>
+    <li>#21271 guix: Explicitly set umask in build container (dongcarl)</li>
+    <li>#21300 script: Add explanatory comment to tc.sh (dscotese)</li>
+    <li>#21317 util: Make assume() usable as unary expression (MarcoFalke)</li>
+    <li>#21336 Make .gitignore ignore src/test/fuzz/fuzz.exe (hebasto)</li>
+    <li>#21337 guix: Update darwin native packages dependencies (hebasto)</li>
+    <li>#21405 compat: remove memcpy -&gt; memmove backwards compatibility alias (fanquake)</li>
+    <li>#21418 contrib: Make systemd invoke dependencies only when ready (laanwj)</li>
+    <li>#21447 Always add -daemonwait to known command line arguments (hebasto)</li>
+    <li>#21471 bugfix: Fix <code class="language-text highlighter-rouge">bech32_encode</code> calls in <code class="language-text highlighter-rouge">gen_key_io_test_vectors.py</code> (sipa)</li>
+    <li>#21615 script: Add trusted key for hebasto (hebasto)</li>
+    <li>#21664 contrib: Use lief for macos and windows symbol &amp; security checks (fanquake)</li>
+    <li>#21695 contrib: Remove no longer used contrib/bitcoin-qt.pro (hebasto)</li>
+    <li>#21711 guix: Add full installation and usage documentation (dongcarl)</li>
+    <li>#21799 guix: Use <code class="language-text highlighter-rouge">gcc-8</code> across the board (dongcarl)</li>
+    <li>#21802 Avoid UB in util/asmap (advance a dereferenceable iterator outside its valid range) (MarcoFalke)</li>
+    <li>#21823 script: Update reviewers (jonatack)</li>
+    <li>#21850 Remove <code class="language-text highlighter-rouge">GetDataDir(net_specific)</code> function (kiminuo)</li>
+    <li>#21871 scripts: Add checks for minimum required os versions (fanquake)</li>
+    <li>#21966 Remove double serialization; use software encoder for fee estimation (sipa)</li>
+    <li>#22060 contrib: Add torv3 seed nodes for testnet, drop v2 ones (laanwj)</li>
+    <li>#22244 devtools: Correctly extract symbol versions in symbol-check (laanwj)</li>
+    <li>#22533 guix/build: Remove vestigial SKIPATTEST.TAG (dongcarl)</li>
+    <li>#22643 guix-verify: Non-zero exit code when anything fails (dongcarl)</li>
+    <li>#22654 guix: Don’t include directory name in SHA256SUMS (achow101)</li>
+  </ul>
+
+  <h3 id="documentation">Documentation</h3>
+  <ul>
+    <li>#15451 clarify getdata limit after #14897 (HashUnlimited)</li>
+    <li>#15545 Explain why CheckBlock() is called before AcceptBlock (Sjors)</li>
+    <li>#17350 Add developer documentation to isminetype (HAOYUatHZ)</li>
+    <li>#17934 Use <code class="language-text highlighter-rouge">CONFIG_SITE</code> variable instead of –prefix option (hebasto)</li>
+    <li>#18030 Coin::IsSpent() can also mean never existed (Sjors)</li>
+    <li>#18096 IsFinalTx comment about nSequence &amp; <code class="language-text highlighter-rouge">OP_CLTV</code> (nothingmuch)</li>
+    <li>#18568 Clarify developer notes about constant naming (ryanofsky)</li>
+    <li>#19961 doc: tor.md updates (jonatack)</li>
+    <li>#19968 Clarify CRollingBloomFilter size estimate (robot-dreams)</li>
+    <li>#20200 Rename CODEOWNERS to REVIEWERS (adamjonas)</li>
+    <li>#20329 docs/descriptors.md: Remove hardened marker in the path after xpub (dgpv)</li>
+    <li>#20380 Add instructions on how to fuzz the P2P layer using Honggfuzz NetDriver (practicalswift)</li>
+    <li>#20414 Remove generated manual pages from master branch (laanwj)</li>
+    <li>#20473 Document current boost dependency as 1.71.0 (laanwj)</li>
+    <li>#20512 Add bash as an OpenBSD dependency (emilengler)</li>
+    <li>#20568 Use FeeModes doc helper in estimatesmartfee (MarcoFalke)</li>
+    <li>#20577 libconsensus: add missing error code description, fix NBitcoin link (theStack)</li>
+    <li>#20587 Tidy up Tor doc (more stringent) (wodry)</li>
+    <li>#20592 Update wtxidrelay documentation per BIP339 (jonatack)</li>
+    <li>#20601 Update for FreeBSD 12.2, add GUI Build Instructions (jarolrod)</li>
+    <li>#20635 fix misleading comment about call to non-existing function (pox)</li>
+    <li>#20646 Refer to BIPs 339/155 in feature negotiation (jonatack)</li>
+    <li>#20653 Move addr relay comment in net to correct place (MarcoFalke)</li>
+    <li>#20677 Remove shouty enums in <code class="language-text highlighter-rouge">net_processing</code> comments (sdaftuar)</li>
+    <li>#20741 Update ‘Secure string handling’ (prayank23)</li>
+    <li>#20757 tor.md and -onlynet help updates (jonatack)</li>
+    <li>#20829 Add -netinfo help (jonatack)</li>
+    <li>#20830 Update developer notes with signet (jonatack)</li>
+    <li>#20890 Add explicit macdeployqtplus dependencies install step (hebasto)</li>
+    <li>#20913 Add manual page generation for bitcoin-util (laanwj)</li>
+    <li>#20985 Add xorriso to macOS depends packages (fanquake)</li>
+    <li>#20986 Update developer notes to discourage very long lines (jnewbery)</li>
+    <li>#20987 Add instructions for generating RPC docs (ben-kaufman)</li>
+    <li>#21026 Document use of make-tag script to make tags (laanwj)</li>
+    <li>#21028 doc/bips: Add BIPs 43, 44, 49, and 84 (luke-jr)</li>
+    <li>#21049 Add release notes for listdescriptors RPC (S3RK)</li>
+    <li>#21060 More precise -debug and -debugexclude doc (wodry)</li>
+    <li>#21077 Clarify -timeout and -peertimeout config options (glozow)</li>
+    <li>#21105 Correctly identify script type (niftynei)</li>
+    <li>#21163 Guix is shipped in Debian and Ubuntu (MarcoFalke)</li>
+    <li>#21210 Rework internal and external links (MarcoFalke)</li>
+    <li>#21246 Correction for VerifyTaprootCommitment comments (roconnor-blockstream)</li>
+    <li>#21263 Clarify that squashing should happen before review (MarcoFalke)</li>
+    <li>#21323 guix, doc: Update default HOSTS value (hebasto)</li>
+    <li>#21324 Update build instructions for Fedora (hebasto)</li>
+    <li>#21343 Revamp macOS build doc (jarolrod)</li>
+    <li>#21346 install qt5 when building on macOS (fanquake)</li>
+    <li>#21384 doc: add signet to bitcoin.conf documentation (jonatack)</li>
+    <li>#21394 Improve comment about protected peers (amitiuttarwar)</li>
+    <li>#21398 Update fuzzing docs for afl-clang-lto (MarcoFalke)</li>
+    <li>#21444 net, doc: Doxygen updates and fixes in netbase.{h,cpp} (jonatack)</li>
+    <li>#21481 Tell howto install clang-format on Debian/Ubuntu (wodry)</li>
+    <li>#21567 Fix various misleading comments (glozow)</li>
+    <li>#21661 Fix name of script guix-build (Emzy)</li>
+    <li>#21672 Remove boostrap info from <code class="language-text highlighter-rouge">GUIX_COMMON_FLAGS</code> doc (fanquake)</li>
+    <li>#21688 Note on SDK for macOS depends cross-compile (jarolrod)</li>
+    <li>#21709 Update reduce-memory.md and bitcoin.conf -maxconnections info (jonatack)</li>
+    <li>#21710 update helps for addnode rpc and -addnode/-maxconnections config options (jonatack)</li>
+    <li>#21752 Clarify that feerates are per virtual size (MarcoFalke)</li>
+    <li>#21811 Remove Visual Studio 2017 reference from readme (sipsorcery)</li>
+    <li>#21818 Fixup -coinstatsindex help, update bitcoin.conf and files.md (jonatack)</li>
+    <li>#21856 add OSS-Fuzz section to fuzzing.md doc (adamjonas)</li>
+    <li>#21912 Remove mention of priority estimation (MarcoFalke)</li>
+    <li>#21925 Update bips.md for 0.21.1 (MarcoFalke)</li>
+    <li>#21942 improve make with parallel jobs description (klementtan)</li>
+    <li>#21947 Fix OSS-Fuzz links (MarcoFalke)</li>
+    <li>#21988 note that brew installed qt is not supported (jarolrod)</li>
+    <li>#22056 describe in fuzzing.md how to reproduce a CI crash (jonatack)</li>
+    <li>#22080 add maxuploadtarget to bitcoin.conf example (jarolrod)</li>
+    <li>#22088 Improve note on choosing posix mingw32 (jarolrod)</li>
+    <li>#22109 Fix external links (IRC, …) (MarcoFalke)</li>
+    <li>#22121 Various validation doc fixups (MarcoFalke)</li>
+    <li>#22172 Update tor.md, release notes with removal of tor v2 support (jonatack)</li>
+    <li>#22204 Remove obsolete <code class="language-text highlighter-rouge">okSafeMode</code> RPC guideline from developer notes (theStack)</li>
+    <li>#22208 Update <code class="language-text highlighter-rouge">REVIEWERS</code> (practicalswift)</li>
+    <li>#22250 add basic I2P documentation (vasild)</li>
+    <li>#22296 Final merge of release notes snippets, mv to wiki (MarcoFalke)</li>
+    <li>#22335 recommend <code class="language-text highlighter-rouge">--disable-external-signer</code> in OpenBSD build guide (theStack)</li>
+    <li>#22339 Document minimum required libc++ version (hebasto)</li>
+    <li>#22349 Repository IRC updates (jonatack)</li>
+    <li>#22360 Remove unused section from release process (MarcoFalke)</li>
+    <li>#22369 Add steps for Transifex to release process (jonatack)</li>
+    <li>#22393 Added info to bitcoin.conf doc (bliotti)</li>
+    <li>#22402 Install Rosetta on M1-macOS for qt in depends (hebasto)</li>
+    <li>#22432 Fix incorrect <code class="language-text highlighter-rouge">testmempoolaccept</code> doc (glozow)</li>
+    <li>#22648 doc, test: improve i2p/tor docs and i2p reachable unit tests (jonatack)</li>
+  </ul>
+
+  <h1 id="credits">Credits</h1>
+
+  <p>Thanks to everyone who directly contributed to this release:</p>
+
+  <ul>
+    <li>Aaron Clauson</li>
+    <li>Adam Jonas</li>
+    <li>amadeuszpawlik</li>
+    <li>Amiti Uttarwar</li>
+    <li>Andrew Chow</li>
+    <li>Andrew Poelstra</li>
+    <li>Anthony Towns</li>
+    <li>Antoine Poinsot</li>
+    <li>Antoine Riard</li>
+    <li>apawlik</li>
+    <li>apitko</li>
+    <li>Ben Carman</li>
+    <li>Ben Woosley</li>
+    <li>benk10</li>
+    <li>Bezdrighin</li>
+    <li>Block Mechanic</li>
+    <li>Brian Liotti</li>
+    <li>Bruno Garcia</li>
+    <li>Carl Dong</li>
+    <li>Christian Decker</li>
+    <li>coinforensics</li>
+    <li>Cory Fields</li>
+    <li>Dan Benjamin</li>
+    <li>Daniel Kraft</li>
+    <li>Darius Parvin</li>
+    <li>Dhruv Mehta</li>
+    <li>Dmitry Goncharov</li>
+    <li>Dmitry Petukhov</li>
+    <li>dplusplus1024</li>
+    <li>dscotese</li>
+    <li>Duncan Dean</li>
+    <li>Elle Mouton</li>
+    <li>Elliott Jin</li>
+    <li>Emil Engler</li>
+    <li>Ethan Heilman</li>
+    <li>eugene</li>
+    <li>Evan Klitzke</li>
+    <li>Fabian Jahr</li>
+    <li>Fabrice Fontaine</li>
+    <li>fanquake</li>
+    <li>fdov</li>
+    <li>flack</li>
+    <li>Fotis Koutoupas</li>
+    <li>Fu Yong Quah</li>
+    <li>fyquah</li>
+    <li>glozow</li>
+    <li>Gregory Sanders</li>
+    <li>Guido Vranken</li>
+    <li>Gunar C. Gessner</li>
+    <li>h</li>
+    <li>HAOYUatHZ</li>
+    <li>Hennadii Stepanov</li>
+    <li>Igor Cota</li>
+    <li>Ikko Ashimine</li>
+    <li>Ivan Metlushko</li>
+    <li>jackielove4u</li>
+    <li>James O’Beirne</li>
+    <li>Jarol Rodriguez</li>
+    <li>Joel Klabo</li>
+    <li>John Newbery</li>
+    <li>Jon Atack</li>
+    <li>Jonas Schnelli</li>
+    <li>João Barbosa</li>
+    <li>Josiah Baker</li>
+    <li>Karl-Johan Alm</li>
+    <li>Kiminuo</li>
+    <li>Klement Tan</li>
+    <li>Kristaps Kaupe</li>
+    <li>Larry Ruane</li>
+    <li>lisa neigut</li>
+    <li>Lucas Ontivero</li>
+    <li>Luke Dashjr</li>
+    <li>Maayan Keshet</li>
+    <li>MarcoFalke</li>
+    <li>Martin Ankerl</li>
+    <li>Martin Zumsande</li>
+    <li>Michael Dietz</li>
+    <li>Michael Polzer</li>
+    <li>Michael Tidwell</li>
+    <li>Niklas Gögge</li>
+    <li>nthumann</li>
+    <li>Oliver Gugger</li>
+    <li>parazyd</li>
+    <li>Patrick Strateman</li>
+    <li>Pavol Rusnak</li>
+    <li>Peter Bushnell</li>
+    <li>Pierre K</li>
+    <li>Pieter Wuille</li>
+    <li>PiRK</li>
+    <li>pox</li>
+    <li>practicalswift</li>
+    <li>Prayank</li>
+    <li>R E Broadley</li>
+    <li>Rafael Sadowski</li>
+    <li>randymcmillan</li>
+    <li>Raul Siles</li>
+    <li>Riccardo Spagni</li>
+    <li>Russell O’Connor</li>
+    <li>Russell Yanofsky</li>
+    <li>S3RK</li>
+    <li>saibato</li>
+    <li>Samuel Dobson</li>
+    <li>sanket1729</li>
+    <li>Sawyer Billings</li>
+    <li>Sebastian Falbesoner</li>
+    <li>setpill</li>
+    <li>sgulls</li>
+    <li>sinetek</li>
+    <li>Sjors Provoost</li>
+    <li>Sriram</li>
+    <li>Stephan Oeste</li>
+    <li>Suhas Daftuar</li>
+    <li>Sylvain Goumy</li>
+    <li>t-bast</li>
+    <li>Troy Giorshev</li>
+    <li>Tushar Singla</li>
+    <li>Tyler Chambers</li>
+    <li>Uplab</li>
+    <li>Vasil Dimov</li>
+    <li>W. J. van der Laan</li>
+    <li>willcl-ark</li>
+    <li>William Bright</li>
+    <li>William Casarin</li>
+    <li>windsok</li>
+    <li>wodry</li>
+    <li>Yerzhan Mazhkenov</li>
+    <li>Yuval Kogman</li>
+    <li>Zero</li>
+  </ul>
+
+  <p>As well as to everyone that helped with translations on
+<a href="https://www.transifex.com/bitcoin/bitcoin/">Transifex</a>.</p>
+
+</div>
+
+      </article>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="/en/version-history">Go back to the version history</a>
+
+</div>
+
+  <div class="footer">
+    <div class="container">
+      
+
+<a class="logo-footer" href="/en/">
+  <img src="/img/icons/logo-footer.svg?1729166419" alt="Bitcoin">
+</a>
+      
+
+<div class="row footer-row">
+  <div class="donate">
+    <div class="row donate-row">
+      <div>
+        <span class="footer-title">Support Bitcoin.org:</span>
+        <a onclick="openDonationModal()" class="donate-btn btn-bright">Donate</a>
+        <p class="donate-text">
+          <a class="donate-link" href="bitcoin:bc1qx3u4njquj0ux63030r4nat8awqrlm0x2zlt96h" target="_blank">bc1qx3u4njquj0ux63030r4nat8awqrlm0x2zlt96h</a>
+        </p>
+        <html xmlns="http://www.w4.org/1999/xhtml">
+<meta charset="UTF-8">
+<head>
+    <style>
+        #animation-construction{
+            width:100%;
+            height:100%;
+            display:block;
+            overflow: hidden;
+            transform: translate3d(0,0,0);
+            text-align: center;
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+<div id="animation-construction"></div>
+<script type="text/javascript" src="/js/lottie.min.js"></script>
+<script>
+	fetch("/json/construction.json")
+		.then((response) => response.json())
+		.then((animationData) => {
+
+		    var params = {
+			container: document.getElementById('animation-construction'),
+			renderer: 'svg',
+			loop: true,
+			autoplay: true,
+			animationData
+		    };
+
+		    var anim;
+
+		    anim = lottie.loadAnimation(params);
+	})
+	.catch((e) => console.error("Error loading animation data: ", e));
+</script>
+</body>
+</html>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row footermenu">
+    <div class="footermenu-item footermenu-introduction">
+      <p class="footer-title">Introduction:</p>
+      <ul class="footermenu-list">
+        <li>
+          <a href="/en/bitcoin-for-individuals">Individuals</a>
+        </li>
+        <li>
+          <a href="/en/bitcoin-for-businesses">Businesses</a>
+        </li>
+        <li>
+          <a href="https://developer.bitcoin.org/">Developers</a>
+        </li>
+        <li>
+          <a href="/en/getting-started">Getting started</a>
+        </li>
+        <li>
+          <a href="/en/how-it-works">How it works</a>
+        </li>
+        <li>
+          <a href="/en/you-need-to-know">You need to know</a>
+        </li>
+        
+        <li>
+          <a href="/en/bitcoin-paper">White paper</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div class="footermenu-item footermenu-resources">
+      <p class="footer-title">Resources:</p>
+      <ul class="footermenu-list">
+        <li>
+          <a href="/en/resources">Resources</a>
+        <li>
+          <a href="/en/exchanges">Exchanges</a>
+        </li>
+        <li>
+          <a href="/en/community">Community</a>
+        </li>
+        <li>
+          <a href="/en/vocabulary">Vocabulary
+          </a>
+        </li>
+        <li>
+          <a href="/en/events">Events</a>
+        </li>
+        
+        <li>
+          <a href="/en/bitcoin-core/">Bitcoin Core</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+    <div class="footermenu-item footermenu-participate">
+      <p class="footer-title">Participate:</p>
+      <ul class="footermenu-list">
+        <li>
+          <a href="/en/support-bitcoin">Support Bitcoin</a>
+        
+        <li>
+          <a href="/en/buy">Buy Bitcoin</a>
+        </li>
+        
+        
+        <li>
+          <a href="/en/full-node">Running a full node</a>
+        </li>
+        
+        <li>
+          <a href="/en/development">Development</a>
+        </li>
+      </ul>
+    </div>
+    <div class="footermenu-item footermenu-other">
+      <p class="footer-title">Other:</p>
+      
+      <a href="/en/scams">Avoid Scams</a>
+      
+      <a href="/en/legal">Legal</a>
+      
+      <a href="/en/privacy">Privacy Policy</a>
+      
+      <a href="/en/press">Press</a>
+      <a href="/en/about-us">About bitcoin.org</a>
+      <a href="/en/blog">Blog</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+    
+
+<div class="footer-bottom">
+  <div class="container">
+    <div class="row footer-bottom-row">
+      <div class="footerlicense">© Bitcoin Project 2009-2024 Released under the <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT license</a>
+        <br> Bitcoin Core pages on Bitcoin.org are
+        <a href="/en/bitcoin-core/about-site">maintained separately</a> from the rest of the site.
+      </div>
+      <div class="row footer-status-block">
+        <a href="/en/alerts" class="statusmenu">Network Status</a>
+        
+<ul class="lang is-expand">
+  <li><a>English</a>
+  <ul>
+    <li><ul>
+      
+      
+        
+          <li><a href="/id/">Bahasa Indonesia</a></li>
+        
+        
+          <li><a href="/ca/">Català</a></li>
+        
+        
+          <li><a href="/da/">Dansk</a></li>
+        
+        
+          <li><a href="/de/">Deutsch</a></li>
+        
+        
+          <li><a href="/en/" class="active">English</a></li>
+        
+        
+          <li><a href="/es/">Español</a></li>
+        
+        
+          <li><a href="/fr/">Français</a></li>
+        
+        
+          <li><a href="/it/">Italiano</a></li>
+        
+        
+          <li><a href="/hu/">Magyar</a></li>
+        
+        
+          <li><a href="/nl/">Nederlands</a></li>
+        
+        
+          <li><a href="/pl/">Polski</a></li>
+        
+        
+          <li><a href="/pt_BR/">Português Brasil</a></li>
+        
+        
+          <li><a href="/ro/">Română</a></li>
+        
+        
+          <li><a href="/sl/">Slovenščina</a></li>
+        
+        
+          <li><a href="/sr/">Srpski</a></li>
+        
+        
+          <li><a href="/sv/">Svenska</a></li>
+        
+        </ul></li><li><ul>
+          <li><a href="/tr/">Türkçe</a></li>
+        
+        
+          <li><a href="/el/">Ελληνικά</a></li>
+        
+        
+          <li><a href="/bg/">български</a></li>
+        
+        
+          <li><a href="/ru/">Русский</a></li>
+        
+        
+          <li><a href="/uk/">Українська</a></li>
+        
+        
+          <li><a href="/hy/">Հայերեն</a></li>
+        
+        
+          <li><a href="/ar/">العربية</a></li>
+        
+        
+          <li><a href="/fa/">فارسی</a></li>
+        
+        
+          <li><a href="/he/">עברית</a></li>
+        
+        
+          <li><a href="/hi/">हिन्दी</a></li>
+        
+        
+          <li><a href="/ko/">한국어</a></li>
+        
+        
+          <li><a href="/km/">ខ្មែរ</a></li>
+        
+        
+          <li><a href="/ja/">日本語</a></li>
+        
+        
+          <li><a href="/zh_CN/">简体中文</a></li>
+        
+        
+          <li><a href="/zh_TW/">繁體中文</a></li>
+        
+      </ul></li>
+    </ul>
+  </li>
+</ul>
+
+        <div id="footer-langselect" class="footer-langselect langselect">
+          <label for="select-input-footer" class="center-select">
+            <select class="center-select__input" onchange="window.location=this.value; ">
+              
+              <option value="/id/" >Bahasa Indonesia</option>
+              
+              <option value="/ca/" >Català</option>
+              
+              <option value="/da/" >Dansk</option>
+              
+              <option value="/de/" >Deutsch</option>
+              
+              <option value="/en/"  selected="selected">English</option>
+              
+              <option value="/es/" >Español</option>
+              
+              <option value="/fr/" >Français</option>
+              
+              <option value="/it/" >Italiano</option>
+              
+              <option value="/hu/" >Magyar</option>
+              
+              <option value="/nl/" >Nederlands</option>
+              
+              <option value="/pl/" >Polski</option>
+              
+              <option value="/pt_BR/" >Português Brasil</option>
+              
+              <option value="/ro/" >Română</option>
+              
+              <option value="/sl/" >Slovenščina</option>
+              
+              <option value="/sr/" >Srpski</option>
+              
+              <option value="/sv/" >Svenska</option>
+              
+              <option value="/tr/" >Türkçe</option>
+              
+              <option value="/el/" >Ελληνικά</option>
+              
+              <option value="/bg/" >български</option>
+              
+              <option value="/ru/" >Русский</option>
+              
+              <option value="/uk/" >Українська</option>
+              
+              <option value="/hy/" >Հայերեն</option>
+              
+              <option value="/ar/" >العربية</option>
+              
+              <option value="/fa/" >فارسی</option>
+              
+              <option value="/he/" >עברית</option>
+              
+              <option value="/hi/" >हिन्दी</option>
+              
+              <option value="/ko/" >한국어</option>
+              
+              <option value="/km/" >ខ្មែរ</option>
+              
+              <option value="/ja/" >日本語</option>
+              
+              <option value="/zh_CN/" >简体中文</option>
+              
+              <option value="/zh_TW/" >繁體中文</option>
+              
+            </select>
+            <span class="center-select__text">en</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+
+
+
+  <script src="/js/bitcoin-core.js"></script>
+
+
+
+
+<script type="text/javascript">
+  fallbackSVG();
+  addAnchorLinks();
+  trackOutgoingLinks();
+  toggleDarkMode();
+</script>
+
+
+
+
+
+  <script>updateToc();</script>
+<script>boxShow();</script>
+<script>onScrollButton();</script>
+
+
+
+</body>
+
+</html>
